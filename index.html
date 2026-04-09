@@ -195,7 +195,8 @@ async function loadData() {
           place: m.parish_place,
           designation: m.ministry_designation_name,
           forane: match ? match.forane_name : '',
-          primary: m.is_primary_ministry == 1
+          primary: m.is_primary_ministry == 1,
+          name_prefix: m.name_prefix || ''  // ✅ ensure prefix exists
         };
       });
 
@@ -217,12 +218,12 @@ async function loadData() {
 }
 
 function getPrefix(priest) {
-    const primaryMinistry = priest.ministries.find(m => m.primary);
-    if (primaryMinistry && primaryMinistry.name_prefix) {
-      return primaryMinistry.name_prefix.trim();
-    }
-    return '';
+  const primaryMinistry = priest.ministries.find(m => m.primary);
+  if (primaryMinistry && primaryMinistry.name_prefix) {
+    return primaryMinistry.name_prefix.trim(); // returns "Fr." or whatever
   }
+  return ''; // fallback empty if none
+}
 
 function display(priests) {
   listEl.innerHTML = '';
