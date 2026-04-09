@@ -278,25 +278,35 @@ function display(priests) {
     listEl.appendChild(li);
   });
 }
+function normalize(str) {
+  return (str || '').toLowerCase().replace(/[^a-z0-9]/g, '');
+}
+
 function filterPriests() {
-  const q = document.getElementById('search-bar').value.toLowerCase();
+  const q = normalize(document.getElementById('search-bar').value);
 
   const filtered = allPriests.filter(p => {
-
     return (
-      p.name?.toLowerCase().includes(q) ||
-      p.nickname?.toLowerCase().includes(q) ||
-      p.ministries.some(m =>
-        m.parish?.toLowerCase().includes(q) ||
-        m.place?.toLowerCase().includes(q) || 
-        m.designation?.toLowerCase().includes(q) ||
-        m.forane?.toLowerCase().includes(q)
-      )
+      normalize(p.name).includes(q) || 
+      normalize(p.nickname).includes(q) || 
+      p.ministries.some(m => {
+        const parish = normalize(m.parish);
+        const place = normalize(m.place);
+        const combined = `${parish}, ${place}`;
+        const designation = normalize(m.designation);
+        const forane = normalize(m.forane);
+
+        // ✅ matches parish, place, combined, designation, or forane
+        return parish.includes(q) || place.includes(q) || combined.includes(q) ||
+               designation.includes(q) || forane.includes(q);
+      })
     );
   });
 
   display(filtered);
 }
+
+
 
 loadData();
 </script>
