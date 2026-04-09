@@ -83,45 +83,48 @@
   display: flex;
   gap: 12px;
   align-items: flex-start;
-  background: #fff;
-  border-radius: 12px;
-  padding: 12px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-
-  /* IMPORTANT FIX */
-  overflow: hidden;
+  text-align: left;   /* ✅ FIX */
 }
 
 .priest-info {
   flex: 1;
-  min-width: 0; /* 🔥 prevents overflow */
+  min-width: 0;
+  text-align: left;   /* ✅ FORCE LEFT ALIGN */
 }
-
 /* Image styling */
 .priest-item img {
-  width: 90px;
-  height: 110px;
+  width: 80px;
+  height: 100px;
   object-fit: cover;
-  border-radius: 10px;
+  border-radius: 8px;
+  flex-shrink: 0;
 }
 
 /* Text colors */
+.priest-item h3 {
+  color: #000;          /* ✅ black name */
+  font-size: 16px;
+  margin: 5px 0;
+}
+
 .designation {
   color: #1a5276;
   font-weight: bold;
+  font-size: 14px;
 }
 
 .parish {
   color: #117864;
+  font-size: 13px;
 }
 
 .forane {
   display: inline-block;
-  background: #f0f3f4;
+  background: #f4ecf7;
   color: #7d3c98;
-  padding: 3px 8px;
-  border-radius: 8px;
-  font-size: 12px;
+  padding: 2px 6px;
+  border-radius: 6px;
+  font-size: 11px;
   margin-top: 3px;
 }
   </style>
@@ -234,18 +237,20 @@ function display(priests) {
     ${p.nickname ? `<p>${p.nickname}</p>` : ''}
 
     ${p.ministries.map(m => `
-      <div style="margin-top:10px;">
-        <div class="designation">
-          ${m.designation}${m.primary ? ' (Primary)' : ''}
-        </div>
+  <div style="margin-top:8px; border-top:1px solid #eee; padding-top:6px;">
+    
+    <div class="designation">
+      ${m.designation}${m.primary ? ' (Primary)' : ''}
+    </div>
 
-        <div class="parish">
-          ${m.parish}, ${m.place}
-        </div>
+    <div class="parish">
+      ${m.parish}, ${m.place}
+    </div>
 
-        ${m.forane ? `<div class="forane">${m.forane}</div>` : ''}
-      </div>
-    `).join('')}
+    ${m.forane ? `<div class="forane">${m.forane}</div>` : ''}
+
+  </div>
+`).join('')}
   </div>
 `;
 
