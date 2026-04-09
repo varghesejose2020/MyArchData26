@@ -229,6 +229,7 @@ function display(priests) {
   countEl.textContent = `Total Priests: ${priests.length}`;
 
   priests.forEach(p => {
+    const prefix = getPrefix(p); 
 
     const ministriesHtml = p.ministries.map(m => `
   <div style="margin-top:10px;">
