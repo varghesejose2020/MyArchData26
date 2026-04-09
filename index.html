@@ -230,51 +230,34 @@ function display(priests) {
   countEl.textContent = `Total Priests: ${priests.length}`;
 
   priests.forEach(p => {
-    const prefix = getPrefix(p); 
+    const prefix = getPrefix(p); // "Fr." or empty
 
-    const ministriesHtml = p.ministries.length > 0
-  ? p.ministries.map(m => `
-      <div style="margin-top:10px;">
-        <p><b>${m.designation}${m.primary ? ' (Primary)' : ''}</b></p>
-        <p>${m.parish}, ${m.place}</p>
-        <p style="color:gray;">${m.forane || ''}</p>
-      </div>
-    `).join('')  // ✅ join inside the true branch
-  : '<span class="place-info text-muted">No active ministry</span>';  // fallback if empty
+    // Build ministries HTML or fallback if empty
+    const ministriesHtml = (p.ministries && p.ministries.length > 0)
+      ? p.ministries.map(m => `
+        <div style="margin-top:8px; border-top:1px solid #eee; padding-top:6px;">
+          <div class="designation">${m.designation}${m.primary ? ' (Primary)' : ''}</div>
+          <div class="parish">${m.parish}, ${m.place}</div>
+          ${m.forane ? `<div class="forane">${m.forane}</div>` : ''}
+        </div>
+      `).join('')
+      : '<span class="place-info text-muted">No active ministry</span>';
 
     const li = document.createElement('li');
     li.className = 'priest-item';
 
     li.innerHTML = `
-  <img src="${fixPhoto(p.photo)}" />
-
-  <div class="priest-info">
-    <h3>${prefix} ${p.name || 'No Name'}</h3>
-    ${p.nickname ? `<p>${p.nickname}</p>` : ''}
-
-    ${p.ministries.map(m => `
-      <div style="margin-top:8px; border-top:1px solid #eee; padding-top:6px;">
-        
-        <div class="designation">
-          ${m.designation}${m.primary ? ' (Primary)' : ''}
-        </div>
-
-        <div class="parish">
-          ${m.parish}, ${m.place}
-        </div>
-
-        ${m.forane ? `<div class="forane">${m.forane}</div>` : ''}
-
+      <img src="${fixPhoto(p.photo)}" />
+      <div class="priest-info">
+        <h3>${prefix} ${p.name || 'No Name'}</h3>
+        ${p.nickname ? `<p>${p.nickname}</p>` : ''}
+        ${ministriesHtml} <!-- ✅ THIS WILL SHOW FALLBACK IF EMPTY -->
       </div>
-    `).join('')}
-  </div>
-`;
-      
+    `;
 
     listEl.appendChild(li);
   });
 }
-
 function filterPriests() {
   const q = document.getElementById('search-bar').value.toLowerCase();
 
