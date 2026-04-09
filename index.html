@@ -97,9 +97,8 @@
   <ul id="priests-list"></ul>
 
 <script>
-const PRIESTS_API = "https://myparish.archeparchybookkeeping.org/index.php/MobileApi/all_priests_with_current_ministry";
-const PARISHES_API = "https://myparish.archeparchybookkeeping.org/index.php/MobileApi/get_all_parishes";
-
+const jsonUrl = 'priests.json';
+const parishUrl = 'parishes.json';
 let allPriests = [];
 
 const listEl = document.getElementById('priests-list');
