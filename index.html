@@ -238,11 +238,14 @@ async function loadData() {
 }
 
 function getPrefix(priest) {
-  const primaryMinistry = priest.ministries.find(m => m.primary);
-  if (primaryMinistry && primaryMinistry.name_prefix) {
-    return primaryMinistry.name_prefix.trim(); // returns "Fr." or whatever
+  let primaryMinistry = priest.ministries.find(m => m.primary);
+  if (!primaryMinistry && priest.ministries.length > 0) {
+    // fallback to first ministry
+    primaryMinistry = priest.ministries[0];
   }
-  return ''; // fallback empty if none
+  return primaryMinistry && primaryMinistry.name_prefix
+    ? primaryMinistry.name_prefix.trim()
+    : '';
 }
 
 function display(priests) {
