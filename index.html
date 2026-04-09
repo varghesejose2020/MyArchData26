@@ -118,8 +118,8 @@ function fixPhoto(url) {
 async function loadData() {
   try {
     const [priestsRes, parishesRes] = await Promise.all([
-      fetch(PRIESTS_API),
-      fetch(PARISHES_API)
+      fetch(jsonUrl),
+      fetch(parishUrl)
     ]);
 
     const priestsJson = await priestsRes.json();
