@@ -168,22 +168,26 @@ function display(priests) {
 
   priests.forEach(p => {
 
-    const main = p.ministries.find(m => m.primary) || p.ministries[0];
+    const ministriesHtml = p.ministries.map(m => `
+  <div style="margin-top:10px;">
+    <p><b>${m.designation}${m.primary ? ' (Primary)' : ''}</b></p>
+    <p>${m.parish}, ${m.place}</p>
+    <p style="color:gray;">${m.forane || ''}</p>
+  </div>
+`).join('');
 
     const li = document.createElement('li');
     li.className = 'priest-item';
 
     li.innerHTML = `
-      <img src="${fixPhoto(p.photo)}" />
-      <h3>${p.name || 'No Name'}</h3>
-      ${p.nickname ? `<p>${p.nickname}</p>` : ''}
+  <img src="${fixPhoto(p.photo)}" />
+  <h3>${p.name || 'No Name'}</h3>
+  ${p.nickname ? `<p>${p.nickname}</p>` : ''}
 
-      ${main ? `
-        <p><b>${main.designation}</b></p>
-        <p>${main.parish}, ${main.place}</p>
-        <p style="color:gray;">${main.forane || ''}</p>
-      ` : ''}
-    `;
+  ${ministriesHtml}
+`;
+
+      
 
     listEl.appendChild(li);
   });
