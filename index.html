@@ -77,6 +77,46 @@
       margin: 40px;
       font-size: 18px;
     }
+
+    /* Layout: image left, text right */
+.priest-item {
+  display: flex;
+  gap: 15px;
+  align-items: flex-start;
+  text-align: left;
+}
+
+.priest-info {
+  flex: 1;
+}
+
+/* Image styling */
+.priest-item img {
+  width: 90px;
+  height: 110px;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+/* Text colors */
+.designation {
+  color: #1a5276;
+  font-weight: bold;
+}
+
+.parish {
+  color: #117864;
+}
+
+.forane {
+  display: inline-block;
+  background: #f0f3f4;
+  color: #7d3c98;
+  padding: 3px 8px;
+  border-radius: 8px;
+  font-size: 12px;
+  margin-top: 3px;
+}
   </style>
 </head>
 
@@ -181,10 +221,25 @@ function display(priests) {
 
     li.innerHTML = `
   <img src="${fixPhoto(p.photo)}" />
-  <h3>${p.name || 'No Name'}</h3>
-  ${p.nickname ? `<p>${p.nickname}</p>` : ''}
 
-  ${ministriesHtml}
+  <div class="priest-info">
+    <h3>${p.name || 'No Name'}</h3>
+    ${p.nickname ? `<p>${p.nickname}</p>` : ''}
+
+    ${p.ministries.map(m => `
+      <div style="margin-top:10px;">
+        <div class="designation">
+          ${m.designation}${m.primary ? ' (Primary)' : ''}
+        </div>
+
+        <div class="parish">
+          ${m.parish}, ${m.place}
+        </div>
+
+        ${m.forane ? `<div class="forane">${m.forane}</div>` : ''}
+      </div>
+    `).join('')}
+  </div>
 `;
 
       
