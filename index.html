@@ -159,6 +159,26 @@ const listEl = document.getElementById('priests-list');
 const countEl = document.getElementById('priest-count');
 const loadingEl = document.getElementById('loading-message');
 
+
+// ----------------- Add Forane color mapping here -----------------
+const foraneColorMap = {};
+const colorPalette = [
+  '#FF6F61', '#6B5B95', '#88B04B', '#F7CAC9',
+  '#92A8D1', '#F15A24', '#2E8B57', '#8E44AD',
+  '#D35400', '#16A085', '#2980B9', '#C0392B'
+];
+let foraneColorIndex = 0;
+
+function getForaneColor(forane) {
+  if (!forane) return '#888';
+  if (!foraneColorMap[forane]) {
+    foraneColorMap[forane] = colorPalette[foraneColorIndex % colorPalette.length];
+    foraneColorIndex++;
+  }
+  return foraneColorMap[forane];
+}
+// -------------------------------------------------------------------
+
 function normalize(str) {
   return (str || '').toLowerCase().replace(/[^a-z]/g, '');
 }
@@ -238,7 +258,7 @@ function display(priests) {
         <div style="margin-top:8px; border-top:1px solid #eee; padding-top:6px;">
           <div class="designation">${m.designation}${m.primary ? ' (Primary)' : ''}</div>
           <div class="parish">${m.parish}, ${m.place}</div>
-          ${m.forane ? `<div class="forane">${m.forane}</div>` : ''}
+          ${m.forane ? `<div class="forane" style="background-color:${getForaneColor(m.forane)};color:#fff;">${m.forane}</div>` : ''}
         </div>
       `).join('')
       : '<span class="place-info text-muted">No active ministry</span>';
