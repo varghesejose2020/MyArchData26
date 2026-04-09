@@ -231,13 +231,15 @@ function display(priests) {
   priests.forEach(p => {
     const prefix = getPrefix(p); 
 
-    const ministriesHtml = p.ministries.map(m => `
-  <div style="margin-top:10px;">
-    <p><b>${m.designation}${m.primary ? ' (Primary)' : ''}</b></p>
-    <p>${m.parish}, ${m.place}</p>
-    <p style="color:gray;">${m.forane || ''}</p>
-  </div>
-`).join('');
+    const ministriesHtml = p.ministries.length > 0
+  ? p.ministries.map(m => `
+      <div style="margin-top:10px;">
+        <p><b>${m.designation}${m.primary ? ' (Primary)' : ''}</b></p>
+        <p>${m.parish}, ${m.place}</p>
+        <p style="color:gray;">${m.forane || ''}</p>
+      </div>
+    `).join('')  // ✅ join inside the true branch
+  : '<span class="place-info text-muted">No active ministry</span>';  // fallback if empty
 
     const li = document.createElement('li');
     li.className = 'priest-item';
