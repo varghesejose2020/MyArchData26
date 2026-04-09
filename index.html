@@ -274,6 +274,7 @@ function filterPriests() {
       p.nickname?.toLowerCase().includes(q) ||
       p.ministries.some(m =>
         m.parish?.toLowerCase().includes(q) ||
+        m.place?.toLowerCase().includes(q) || 
         m.designation?.toLowerCase().includes(q) ||
         m.forane?.toLowerCase().includes(q)
       )
