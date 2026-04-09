@@ -45,12 +45,16 @@
     }
 
     #priests-list {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 20px;
-      padding: 20px;
-      list-style: none;
-    }
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* increased min width */
+  gap: 20px;
+  padding: 20px;
+  list-style: none;
+  max-width: 1200px;   /* Optional: limit container width to avoid stretching too far */
+  margin: 0 auto;      /* center the grid on large screens */
+  margin-left: auto;
+  margin-right: auto;
+}
 
     .priest-item {
       background: #fff;
