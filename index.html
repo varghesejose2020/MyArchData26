@@ -279,7 +279,12 @@ function display(priests) {
   });
 }
 function normalize(str) {
-  return (str || '').toLowerCase().replace(/[^a-z0-9]/g, '');
+  if (!str) return '';
+  return str
+    .replace(/’/g, "'")          // convert curly apostrophe to straight
+    .replace(/[^a-z0-9\s]/gi, '') // keep letters, numbers, spaces
+    .toLowerCase()
+    .trim();
 }
 
 function filterPriests() {
@@ -287,16 +292,15 @@ function filterPriests() {
 
   const filtered = allPriests.filter(p => {
     return (
-      normalize(p.name).includes(q) || 
-      normalize(p.nickname).includes(q) || 
+      normalize(p.name).includes(q) ||
+      normalize(p.nickname).includes(q) ||
       p.ministries.some(m => {
         const parish = normalize(m.parish);
         const place = normalize(m.place);
-        const combined = `${parish}, ${place}`;
+        const combined = normalize(`${m.parish}, ${m.place}`);
         const designation = normalize(m.designation);
         const forane = normalize(m.forane);
 
-        // ✅ matches parish, place, combined, designation, or forane
         return parish.includes(q) || place.includes(q) || combined.includes(q) ||
                designation.includes(q) || forane.includes(q);
       })
@@ -305,7 +309,6 @@ function filterPriests() {
 
   display(filtered);
 }
-
 
 
 loadData();
