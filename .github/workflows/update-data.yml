@@ -16,7 +16,10 @@ jobs:
       - name: Fetch Priests Data
         run: |
           curl -f -o priests.json "https://myparish.archeparchybookkeeping.org/index.php/MobileApi/all_priests_with_current_ministry"
-
+          
+- name: Show priests sample
+  run: |
+    head -n 5 priests.json
       - name: Fetch Parishes Data
         run: |
           curl -f -o parishes.json "https://myparish.archeparchybookkeeping.org/index.php/MobileApi/get_all_parishes"
