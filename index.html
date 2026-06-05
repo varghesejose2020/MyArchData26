@@ -1,114 +1,84 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Archdiocese Changanacherry - Priests</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Priests Directory</title>
 
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      background-color: #f4f7f8;
-      color: #333;
-    }
+<style>
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  background: #f4f7f8;
+  color: #333;
+}
 
-    h1 {
-      text-align: center;
-      color: #1a5276;
-      margin-top: 30px;
-    }
+h1 {
+  text-align: center;
+  color: #1a5276;
+  margin-top: 30px;
+}
 
-    .logo-container {
-      text-align: center;
-      margin-top: 20px;
-    }
+.logo-container {
+  text-align: center;
+  margin-top: 20px;
+}
 
-    .logo-container img {
-      width: 100px;
-    }
+.logo-container img {
+  width: 100px;
+}
 
-    #search-bar {
-      display: block;
-      width: 90%;
-      max-width: 500px;
-      margin: 20px auto;
-      padding: 12px;
-      border-radius: 25px;
-      border: 2px solid #1a5276;
-    }
+#search-bar {
+  display: block;
+  width: 90%;
+  max-width: 500px;
+  margin: 20px auto;
+  padding: 12px;
+  border-radius: 25px;
+  border: 2px solid #1a5276;
+}
 
-    #priest-count {
-      text-align: center;
-      font-weight: bold;
-      color: #117864;
-    }
+#priest-count {
+  text-align: center;
+  font-weight: bold;
+  color: #117864;
+}
 
-    #priests-list {
+#priests-list {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* increased min width */
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 20px;
   padding: 20px;
+  max-width: 1200px;
+  margin: auto;
   list-style: none;
-  max-width: 1200px;   /* Optional: limit container width to avoid stretching too far */
-  margin: 0 auto;      /* center the grid on large screens */
-  margin-left: auto;
-  margin-right: auto;
 }
 
-    .priest-item {
-      background: #fff;
-      border-radius: 12px;
-      padding: 15px;
-      text-align: center;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-    }
-
-    .priest-item img {
-      width: 100%;
-      height: 220px;
-      object-fit: cover;
-      border-radius: 10px;
-    }
-
-    .priest-item h3 {
-      color: #117864;
-      margin: 10px 0 5px;
-    }
-
-    #loading-message {
-      text-align: center;
-      margin: 40px;
-      font-size: 18px;
-    }
-
-    /* Layout: image left, text right */
 .priest-item {
+  background: #fff;
+  border-radius: 12px;
+  padding: 15px;
   display: flex;
   gap: 12px;
-  align-items: flex-start;
-  text-align: left;   /* ✅ FIX */
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  position: relative;
 }
 
-.priest-info {
-  flex: 1;
-  min-width: 0;
-  text-align: left;   /* ✅ FORCE LEFT ALIGN */
-}
-/* Image styling */
 .priest-item img {
   width: 80px;
   height: 100px;
   object-fit: cover;
   border-radius: 8px;
-  flex-shrink: 0;
 }
 
-/* Text colors */
+.priest-info {
+  flex: 1;
+}
+
 .priest-item h3 {
-  color: #000;          /* ✅ black name */
-  font-size: 16px;
   margin: 5px 0;
+  font-size: 16px;
+  color: #000;
 }
 
 .designation {
@@ -124,197 +94,211 @@
 
 .forane {
   display: inline-block;
-  background: #f4ecf7;
-  color: #7d3c98;
+  background: #7d3c98;
+  color: #fff;
   padding: 2px 6px;
   border-radius: 6px;
   font-size: 11px;
   margin-top: 3px;
 }
-  </style>
+
+/* NEW badge */
+.new-badge {
+  background: #e74c3c;
+  color: #fff;
+  font-size: 10px;
+  padding: 2px 6px;
+  border-radius: 10px;
+  margin-left: 6px;
+  font-weight: bold;
+}
+
+/* Highlight recent appointments */
+.recent-appointment {
+  border: 3px solid #f39c12;
+  background: #fffdf2;
+}
+
+/* Join date */
+.appointment-date {
+  font-size: 12px;
+  color: #d35400;
+  margin-top: 4px;
+  font-weight: 600;
+}
+
+#loading-message {
+  text-align: center;
+  margin: 40px;
+  font-size: 18px;
+}
+</style>
 </head>
 
 <body>
 
-  <div class="logo-container">
-    <img src="https://www.archdiocesechanganacherry.org//images/Arch_Logo.jpeg">
-  </div>
+<div class="logo-container">
+  <img src="https://www.archdiocesechanganacherry.org//images/Arch_Logo.jpeg">
+</div>
 
-  <h1>Priests Directory</h1>
+<h1>Priests Directory</h1>
 
-  <input type="text" id="search-bar" placeholder="Search priests..." oninput="filterPriests()">
+<input type="text" id="search-bar" placeholder="Search priests..." oninput="filterPriests()">
 
-  <p id="priest-count">Total Priests: 0</p>
+<p id="priest-count">Total Priests: 0</p>
 
-  <div id="loading-message">Loading...</div>
+<div id="loading-message">Loading...</div>
 
-  <ul id="priests-list"></ul>
+<ul id="priests-list"></ul>
 
 <script>
+
 const jsonUrl = 'priests.json';
 const parishUrl = 'parishes.json';
+
 let allPriests = [];
 
 const listEl = document.getElementById('priests-list');
 const countEl = document.getElementById('priest-count');
 const loadingEl = document.getElementById('loading-message');
 
-
-// ----------------- Add Forane color mapping here -----------------
-const foraneColorMap = {};
-const colorPalette = [
-  '#FF6F61', '#6B5B95', '#88B04B', '#F7CAC9',
-  '#92A8D1', '#F15A24', '#2E8B57', '#8E44AD',
-  '#D35400', '#16A085', '#2980B9', '#C0392B'
-];
-let foraneColorIndex = 0;
-
-function getForaneColor(forane) {
-  if (!forane) return '#888';
-  if (!foraneColorMap[forane]) {
-    foraneColorMap[forane] = colorPalette[foraneColorIndex % colorPalette.length];
-    foraneColorIndex++;
-  }
-  return foraneColorMap[forane];
-}
-// -------------------------------------------------------------------
-
+/* Normalize */
 function normalize(str) {
-  return (str || '').toLowerCase().replace(/[^a-z]/g, '');
+  return (str || '')
+    .replace(/’/g, "'")
+    .replace(/[^a-z0-9\s]/gi, '')
+    .toLowerCase()
+    .trim();
 }
 
+/* Fix photo */
 function fixPhoto(url) {
   if (!url) return '';
   if (url.startsWith('http')) return url;
   return url.replace(/^\.\/?/, 'https://myparish.archeparchybookkeeping.org/');
 }
 
+/* Check recent join date (30 days) */
+function isRecent(dateStr) {
+  if (!dateStr) return false;
+  const d = new Date(dateStr);
+  const diffDays = (new Date() - d) / (1000 * 60 * 60 * 24);
+  return diffDays <= 30;
+}
+
+/* Load data */
 async function loadData() {
-  try {
-    const [priestsRes, parishesRes] = await Promise.all([
-      fetch(jsonUrl),
-      fetch(parishUrl)
-    ]);
+  const [priestsRes, parishesRes] = await Promise.all([
+    fetch(jsonUrl),
+    fetch(parishUrl)
+  ]);
 
-    const priestsJson = await priestsRes.json();
-    const parishesJson = await parishesRes.json();
+  const priestsJson = await priestsRes.json();
+  const parishesJson = await parishesRes.json();
 
-    const parishes = parishesJson.data;
+  const parishes = parishesJson.data;
 
-    allPriests = priestsJson.data.map(priest => {
+  allPriests = priestsJson.data.map(priest => {
 
-      const ministries = (priest.current_ministry || []).map(m => {
+    const ministries = (priest.current_ministry || []).map(m => {
 
-        const match = parishes.find(p =>
-          normalize(p.parish_name) === normalize(m.parish_name) &&
-          normalize(p.parish_place) === normalize(m.parish_place)
-        );
-
-        return {
-          parish: m.parish_name,
-          place: m.parish_place,
-          designation: m.ministry_designation_name,
-          forane: match ? match.forane_name : '',
-          primary: m.is_primary_ministry == 1,
-          name_prefix: m.name_prefix || ''  // ✅ ensure prefix exists
-        };
-      });
+      const match = parishes.find(p =>
+        normalize(p.parish_name) === normalize(m.parish_name) &&
+        normalize(p.parish_place) === normalize(m.parish_place)
+      );
 
       return {
-        name: priest.name,
-        nickname: priest.nickname,
-        photo: priest.photo,
-        ministries
+        parish: m.parish_name,
+        place: m.parish_place,
+        designation: m.ministry_designation_name,
+        forane: match ? match.forane_name : '',
+        primary: m.is_primary_ministry == 1,
+        name_prefix: m.name_prefix || '',
+        join_date: m.join_date || ''
       };
     });
 
-    display(allPriests);
-    loadingEl.style.display = 'none';
+    return {
+      name: priest.name,
+      nickname: priest.nickname,
+      photo: priest.photo,
+      ministries
+    };
+  });
 
-  } catch (err) {
-    loadingEl.innerText = "Failed to load data.";
-    console.error(err);
-  }
+  display(allPriests);
+  loadingEl.style.display = 'none';
 }
 
-function getPrefix(priest) {
-  let primaryMinistry = priest.ministries.find(m => m.primary);
-  if (!primaryMinistry && priest.ministries.length > 0) {
-    // fallback to first ministry
-    primaryMinistry = priest.ministries[0];
-  }
-  return primaryMinistry && primaryMinistry.name_prefix
-    ? primaryMinistry.name_prefix.trim()
-    : '';
-}
-
+/* Display priests */
 function display(priests) {
+
   listEl.innerHTML = '';
   countEl.textContent = `Total Priests: ${priests.length}`;
 
   priests.forEach(p => {
-    const prefix = getPrefix(p); // "Fr." or empty
 
-    // Build ministries HTML or fallback if empty
-    const ministriesHtml = (p.ministries && p.ministries.length > 0)
-      ? p.ministries.map(m => `
-        <div style="margin-top:8px; border-top:1px solid #eee; padding-top:6px;">
-          <div class="designation">${m.designation}${m.primary ? ' (Primary)' : ''}</div>
-          <div class="parish">${m.parish}, ${m.place}</div>
-          ${m.forane ? `<div class="forane" style="background-color:${getForaneColor(m.forane)};color:#fff;">${m.forane}</div>` : ''}
+    const hasRecent = p.ministries.some(m => isRecent(m.join_date));
+
+    const prefix = p.ministries.find(m => m.primary)?.name_prefix || '';
+
+    const ministriesHtml = p.ministries.map(m => `
+      <div style="margin-top:8px; border-top:1px solid #eee; padding-top:6px;">
+
+        <div class="designation">
+          ${m.designation}
+          ${isRecent(m.join_date) ? '<span class="new-badge">NEW</span>' : ''}
         </div>
-      `).join('')
-      : '<span class="place-info text-muted">No active ministry</span>';
+
+        <div class="parish">${m.parish}, ${m.place}</div>
+
+        ${m.forane ? `<div class="forane">${m.forane}</div>` : ''}
+
+        ${m.join_date ? `
+          <div class="appointment-date">
+            📌 Joined: ${new Date(m.join_date).toLocaleDateString('en-GB')}
+          </div>
+        ` : ''}
+
+      </div>
+    `).join('');
 
     const li = document.createElement('li');
-    li.className = 'priest-item';
+    li.className = 'priest-item' + (hasRecent ? ' recent-appointment' : '');
 
     li.innerHTML = `
       <img src="${fixPhoto(p.photo)}" />
       <div class="priest-info">
-        <h3>${prefix} ${p.name || 'No Name'}</h3>
+        <h3>${prefix} ${p.name}</h3>
         ${p.nickname ? `<p>${p.nickname}</p>` : ''}
-        ${ministriesHtml} <!-- ✅ THIS WILL SHOW FALLBACK IF EMPTY -->
+        ${ministriesHtml}
       </div>
     `;
 
     listEl.appendChild(li);
   });
 }
-function normalize(str) {
-  if (!str) return '';
-  return str
-    .replace(/’/g, "'")          // convert curly apostrophe to straight
-    .replace(/[^a-z0-9\s]/gi, '') // keep letters, numbers, spaces
-    .toLowerCase()
-    .trim();
-}
 
+/* Search filter */
 function filterPriests() {
   const q = normalize(document.getElementById('search-bar').value);
 
-  const filtered = allPriests.filter(p => {
-    return (
-      normalize(p.name).includes(q) ||
-      normalize(p.nickname).includes(q) ||
-      p.ministries.some(m => {
-        const parish = normalize(m.parish);
-        const place = normalize(m.place);
-        const combined = normalize(`${m.parish}, ${m.place}`);
-        const designation = normalize(m.designation);
-        const forane = normalize(m.forane);
-
-        return parish.includes(q) || place.includes(q) || combined.includes(q) ||
-               designation.includes(q) || forane.includes(q);
-      })
-    );
-  });
+  const filtered = allPriests.filter(p =>
+    normalize(p.name).includes(q) ||
+    normalize(p.nickname).includes(q) ||
+    p.ministries.some(m =>
+      normalize(m.parish).includes(q) ||
+      normalize(m.place).includes(q) ||
+      normalize(m.designation).includes(q) ||
+      normalize(m.forane).includes(q)
+    )
+  );
 
   display(filtered);
 }
 
-
 loadData();
+
 </script>
 
 </body>
