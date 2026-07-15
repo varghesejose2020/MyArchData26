@@ -305,57 +305,43 @@
   }
 
   .spotlight-strip{
-    overflow: hidden;
-    position: relative;
-    -webkit-mask-image: linear-gradient(90deg, transparent, #000 4%, #000 96%, transparent);
-    mask-image: linear-gradient(90deg, transparent, #000 4%, #000 96%, transparent);
-  }
-
-  .spotlight-track{
     display: flex;
-    gap: 14px;
-    width: max-content;
-    animation: spotlight-marquee linear infinite;
-    animation-duration: var(--marquee-duration, 30s);
-  }
-
-  .spotlight-strip:hover .spotlight-track{
-    animation-play-state: paused;
-  }
-
-  @keyframes spotlight-marquee{
-    from{ transform: translateX(0); }
-    to{ transform: translateX(-50%); }
+    justify-content: center;
   }
 
   .spotlight-card{
-    flex: 0 0 auto;
-    width: 220px;
-    scroll-snap-align: start;
+    width: 100%;
+    max-width: 380px;
     background: linear-gradient(135deg, var(--maroon-deep), var(--maroon) 65%, #8a2532);
-    border-radius: 12px;
-    padding: 14px;
+    border-radius: var(--radius);
+    padding: 20px 22px;
     display: flex;
-    gap: 10px;
+    gap: 16px;
     align-items: center;
-    box-shadow: 0 8px 20px rgba(90,20,25,0.22);
+    box-shadow: 0 10px 26px rgba(90,20,25,0.26);
     position: relative;
     overflow: hidden;
+    transition: opacity 0.35s ease, transform 0.35s ease;
+  }
+
+  .spotlight-card.fade-out{
+    opacity: 0;
+    transform: translateY(4px);
   }
 
   .spotlight-card::after{
     content: '';
     position: absolute;
     inset: 0;
-    background: radial-gradient(140px 140px at 100% 0%, rgba(217,185,106,0.22), transparent 70%);
+    background: radial-gradient(180px 180px at 100% 0%, rgba(217,185,106,0.22), transparent 70%);
     pointer-events: none;
   }
 
   .spotlight-card img{
-    width: 46px;
-    height: 58px;
+    width: 58px;
+    height: 74px;
     object-fit: cover;
-    border-radius: 6px;
+    border-radius: 8px;
     border: 2px solid rgba(217,185,106,0.55);
     flex-shrink: 0;
   }
@@ -365,9 +351,9 @@
   .spotlight-card-name{
     font-family: 'Cormorant Garamond', serif;
     font-weight: 700;
-    font-size: 15.5px;
+    font-size: 19px;
     color: #fff;
-    margin: 0 0 2px;
+    margin: 0 0 3px;
     line-height: 1.2;
     white-space: nowrap;
     overflow: hidden;
@@ -375,7 +361,7 @@
   }
 
   .spotlight-card-meta{
-    font-size: 10.5px;
+    font-size: 12.5px;
     color: #f2e6d3;
     margin: 0;
     white-space: nowrap;
@@ -384,10 +370,30 @@
   }
 
   .spotlight-card-date{
-    font-size: 10px;
+    font-size: 11px;
     color: var(--gold-soft);
     font-weight: 600;
-    margin-top: 3px;
+    margin-top: 5px;
+  }
+
+  .spotlight-dots{
+    display: flex;
+    justify-content: center;
+    gap: 6px;
+    margin-top: 12px;
+  }
+
+  .spotlight-dot{
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--hairline);
+    transition: background 0.25s ease, transform 0.25s ease;
+  }
+
+  .spotlight-dot.active{
+    background: var(--maroon);
+    transform: scale(1.3);
   }
 </style>
 </head>
@@ -406,8 +412,9 @@
 <div id="spotlight-wrap" class="spotlight-wrap" style="display:none;">
   <p class="spotlight-heading">Recently Joined</p>
   <div class="spotlight-strip">
-    <div class="spotlight-track" id="spotlight-track"></div>
+    <div class="spotlight-card" id="spotlight-card"></div>
   </div>
+  <div class="spotlight-dots" id="spotlight-dots"></div>
 </div>
 
 <div class="controls">
@@ -455,8 +462,8 @@ function isRecent(dateStr) {
   return diffDays <= 30;
 }
 
-/* Get all appointments, one entry per priest (their latest ministry date), newest first */
-function getRecentAppointments(priests) {
+/* Get appointments within the last `days` days, one entry per priest (their latest ministry date), newest first */
+function getRecentAppointments(priests, days = 30) {
   const entries = [];
 
   priests.forEach(p => {
@@ -471,7 +478,7 @@ function getRecentAppointments(priests) {
       }
     });
 
-    if (latestForPriest) {
+    if (latestForPriest && isRecent(latestForPriest.ministry.join_date)) {
       entries.push({ priest: p, ministry: latestForPriest.ministry, date: latestForPriest.date });
     }
   });
@@ -480,39 +487,62 @@ function getRecentAppointments(priests) {
   return entries;
 }
 
-/* Render the "Recently Joined" auto-scrolling strip */
+/* Render the "Recently Joined" single-card auto-rotator */
+let spotlightEntries = [];
+let spotlightIndex = 0;
+let spotlightTimer = null;
+
+function spotlightCardHtml(entry) {
+  return `
+    <img src="${fixPhoto(entry.priest.photo)}" alt="${entry.priest.name}">
+    <div class="spotlight-card-text">
+      <p class="spotlight-card-name">${entry.ministry.name_prefix || ''} ${entry.priest.name}</p>
+      <p class="spotlight-card-meta">${entry.ministry.parish}, ${entry.ministry.place}</p>
+      <p class="spotlight-card-date">${entry.date.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })}</p>
+    </div>
+  `;
+}
+
+function showSpotlightCard(index) {
+  const cardEl = document.getElementById('spotlight-card');
+  const dotsEl = document.getElementById('spotlight-dots');
+
+  spotlightIndex = index;
+  cardEl.classList.add('fade-out');
+
+  setTimeout(() => {
+    cardEl.innerHTML = spotlightCardHtml(spotlightEntries[spotlightIndex]);
+    cardEl.classList.remove('fade-out');
+  }, 350);
+
+  [...dotsEl.children].forEach((dot, i) => dot.classList.toggle('active', i === index));
+}
+
 function renderSpotlight(priests) {
   const wrap = document.getElementById('spotlight-wrap');
-  const trackEl = document.getElementById('spotlight-track');
-  const recent = getRecentAppointments(priests);
+  const dotsEl = document.getElementById('spotlight-dots');
 
-  if (recent.length === 0) {
+  spotlightEntries = getRecentAppointments(priests);
+  if (spotlightTimer) clearInterval(spotlightTimer);
+
+  if (spotlightEntries.length === 0) {
     wrap.style.display = 'none';
     return;
   }
 
-  const cardHtml = entry => `
-    <div class="spotlight-card">
-      <img src="${fixPhoto(entry.priest.photo)}" alt="${entry.priest.name}">
-      <div class="spotlight-card-text">
-        <p class="spotlight-card-name">${entry.ministry.name_prefix || ''} ${entry.priest.name}</p>
-        <p class="spotlight-card-meta">${entry.ministry.parish}, ${entry.ministry.place}</p>
-        <p class="spotlight-card-date">${entry.date.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })}</p>
-      </div>
-    </div>
-  `;
+  dotsEl.innerHTML = spotlightEntries.map(() => `<div class="spotlight-dot"></div>`).join('');
 
-  // Duplicate the sequence so the loop (translateX -50%) is seamless.
-  // If there are too few cards to fill the viewport, duplicate further so the track is wide enough to scroll smoothly.
-  let sequence = recent;
-  while (sequence.length < 6) sequence = sequence.concat(recent);
-
-  trackEl.innerHTML = sequence.map(cardHtml).join('') + sequence.map(cardHtml).join('');
-
-  // Roughly 3.5s per card, so the pace feels consistent regardless of how many priests are shown.
-  trackEl.style.setProperty('--marquee-duration', `${sequence.length * 3.5}s`);
+  document.getElementById('spotlight-card').innerHTML = spotlightCardHtml(spotlightEntries[0]);
+  [...dotsEl.children][0]?.classList.add('active');
+  spotlightIndex = 0;
 
   wrap.style.display = 'block';
+
+  if (spotlightEntries.length > 1) {
+    spotlightTimer = setInterval(() => {
+      showSpotlightCard((spotlightIndex + 1) % spotlightEntries.length);
+    }, 3200);
+  }
 }
 
 /* Load data */
