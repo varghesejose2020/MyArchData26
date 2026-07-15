@@ -287,6 +287,75 @@
     .priest-item{ padding: 14px; gap: 10px; }
     .priest-item img{ width: 62px; height: 78px; }
   }
+
+  /* ---------- Latest appointment spotlight ---------- */
+  .spotlight-wrap{
+    max-width: 640px;
+    margin: 30px auto 0;
+    padding: 0 20px;
+  }
+
+  .spotlight{
+    background: linear-gradient(135deg, var(--maroon-deep), var(--maroon) 60%, #8a2532);
+    border-radius: var(--radius);
+    padding: 20px 22px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    box-shadow: 0 10px 28px rgba(90,20,25,0.28);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .spotlight::after{
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(220px 220px at 100% 0%, rgba(217,185,106,0.22), transparent 70%);
+    pointer-events: none;
+  }
+
+  .spotlight img{
+    width: 60px;
+    height: 76px;
+    object-fit: cover;
+    border-radius: 8px;
+    border: 2px solid rgba(217,185,106,0.55);
+    flex-shrink: 0;
+  }
+
+  .spotlight-text{ min-width: 0; }
+
+  .spotlight-eyebrow{
+    font-size: 10.5px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--gold-soft);
+    font-weight: 700;
+    margin: 0 0 3px;
+  }
+
+  .spotlight-name{
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 700;
+    font-size: 21px;
+    color: #fff;
+    margin: 0 0 2px;
+    line-height: 1.2;
+  }
+
+  .spotlight-meta{
+    font-size: 12.5px;
+    color: #f2e6d3;
+    margin: 0;
+  }
+
+  .spotlight-date{
+    font-size: 11.5px;
+    color: var(--gold-soft);
+    font-weight: 600;
+    margin-top: 4px;
+  }
 </style>
 </head>
 
@@ -300,6 +369,18 @@
   <h1>Priests Directory</h1>
   <div class="rule"></div>
 </header>
+
+<div id="spotlight-wrap" class="spotlight-wrap" style="display:none;">
+  <div class="spotlight">
+    <img id="spotlight-photo" src="" alt="">
+    <div class="spotlight-text">
+      <p class="spotlight-eyebrow">Latest Appointment</p>
+      <p class="spotlight-name" id="spotlight-name"></p>
+      <p class="spotlight-meta" id="spotlight-meta"></p>
+      <p class="spotlight-date" id="spotlight-date"></p>
+    </div>
+  </div>
+</div>
 
 <div class="controls">
   <input type="text" id="search-bar" placeholder="Search by name, parish, or forane…" oninput="filterPriests()">
@@ -346,6 +427,46 @@ function isRecent(dateStr) {
   return diffDays <= 30;
 }
 
+/* Find the priest with the most recent appointment date, across all ministries */
+function getLatestAppointment(priests) {
+  let latest = null; // { priest, ministry, date }
+
+  priests.forEach(p => {
+    p.ministries.forEach(m => {
+      if (!m.join_date) return;
+      const d = new Date(m.join_date);
+      if (isNaN(d)) return;
+      if (!latest || d > latest.date) {
+        latest = { priest: p, ministry: m, date: d };
+      }
+    });
+  });
+
+  return latest;
+}
+
+/* Render the "Latest Appointment" spotlight */
+function renderSpotlight(priests) {
+  const wrap = document.getElementById('spotlight-wrap');
+  const latest = getLatestAppointment(priests);
+
+  if (!latest) {
+    wrap.style.display = 'none';
+    return;
+  }
+
+  document.getElementById('spotlight-photo').src = fixPhoto(latest.priest.photo);
+  document.getElementById('spotlight-photo').alt = latest.priest.name;
+  document.getElementById('spotlight-name').textContent =
+    `${latest.ministry.name_prefix || ''} ${latest.priest.name}`.trim();
+  document.getElementById('spotlight-meta').textContent =
+    `${latest.ministry.designation} · ${latest.ministry.parish}, ${latest.ministry.place}`;
+  document.getElementById('spotlight-date').textContent =
+    `Appointed ${latest.date.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })}`;
+
+  wrap.style.display = 'block';
+}
+
 /* Load data */
 async function loadData() {
   const [priestsRes, parishesRes] = await Promise.all([
@@ -386,6 +507,7 @@ async function loadData() {
     };
   });
 
+  renderSpotlight(allPriests);
   display(allPriests);
   loadingEl.style.display = 'none';
 }
