@@ -395,6 +395,165 @@
     background: var(--maroon);
     transform: scale(1.3);
   }
+
+  /* ---------- Tabs ---------- */
+  .tabs{
+    display: flex;
+    justify-content: center;
+    gap: 6px;
+    margin: 28px auto 0;
+    padding: 0 20px;
+  }
+
+  .tab-btn{
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.03em;
+    color: var(--ink-soft);
+    background: var(--card);
+    border: 1px solid var(--hairline);
+    padding: 10px 22px;
+    border-radius: 999px;
+    cursor: pointer;
+    transition: all 0.18s ease;
+  }
+
+  .tab-btn:hover{
+    color: var(--maroon);
+    border-color: var(--gold-soft);
+  }
+
+  .tab-btn.active{
+    background: var(--maroon);
+    border-color: var(--maroon);
+    color: #fff;
+    box-shadow: var(--shadow);
+  }
+
+  .tab-panel{ display: none; }
+  .tab-panel.active{ display: block; }
+
+  /* ---------- Priest timeline ---------- */
+  #timeline-list{
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 8px clamp(16px, 4vw, 40px) 80px;
+    list-style: none;
+  }
+
+  .timeline-person{
+    background: var(--card);
+    border: 1px solid var(--hairline);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    padding: 20px 22px;
+    margin-bottom: 18px;
+    display: flex;
+    gap: 16px;
+  }
+
+  .timeline-person img{
+    width: 56px;
+    height: 70px;
+    object-fit: cover;
+    border-radius: 8px;
+    border: 1px solid var(--hairline);
+    flex-shrink: 0;
+  }
+
+  .timeline-person-name{
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 700;
+    font-size: 19px;
+    margin: 0 0 12px;
+    color: var(--ink);
+  }
+
+  .timeline-track{
+    position: relative;
+    padding-left: 22px;
+  }
+
+  .timeline-track::before{
+    content: '';
+    position: absolute;
+    left: 5px;
+    top: 6px;
+    bottom: 6px;
+    width: 2px;
+    background: var(--hairline);
+  }
+
+  .timeline-entry{
+    position: relative;
+    padding-bottom: 16px;
+  }
+
+  .timeline-entry:last-child{ padding-bottom: 0; }
+
+  .timeline-entry::before{
+    content: '';
+    position: absolute;
+    left: -22px;
+    top: 4px;
+    width: 11px;
+    height: 11px;
+    border-radius: 50%;
+    background: var(--card);
+    border: 2px solid var(--hairline);
+  }
+
+  .timeline-entry.is-current::before{
+    border-color: var(--gold);
+    background: var(--gold);
+    box-shadow: 0 0 0 3px rgba(184,134,11,0.15);
+  }
+
+  .timeline-entry-designation{
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--maroon);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .timeline-current-tag{
+    font-size: 9.5px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    font-weight: 700;
+    color: var(--gold);
+    border: 1px solid var(--gold-soft);
+    padding: 1px 7px;
+    border-radius: 999px;
+  }
+
+  .timeline-entry-parish{
+    font-size: 13.5px;
+    color: var(--forest);
+    margin-top: 2px;
+  }
+
+  .timeline-entry-dates{
+    font-size: 11.5px;
+    color: var(--ink-soft);
+    margin-top: 3px;
+  }
+
+  .timeline-empty-notice{
+    max-width: 640px;
+    margin: 40px auto;
+    padding: 20px 24px;
+    text-align: center;
+    background: var(--card);
+    border: 1px dashed var(--hairline);
+    border-radius: var(--radius);
+    color: var(--ink-soft);
+    font-size: 13.5px;
+    line-height: 1.6;
+  }
 </style>
 </head>
 
@@ -409,23 +568,42 @@
   <div class="rule"></div>
 </header>
 
-<div id="spotlight-wrap" class="spotlight-wrap" style="display:none;">
-  <p class="spotlight-heading">Recently Joined</p>
-  <div class="spotlight-strip">
-    <div class="spotlight-card" id="spotlight-card"></div>
+<div class="tabs">
+  <button class="tab-btn active" id="tab-btn-directory" onclick="switchTab('directory')">Directory</button>
+  <button class="tab-btn" id="tab-btn-timeline" onclick="switchTab('timeline')">Priest Timeline</button>
+</div>
+
+<div id="tab-directory" class="tab-panel active">
+
+  <div id="spotlight-wrap" class="spotlight-wrap" style="display:none;">
+    <p class="spotlight-heading">Recently Joined</p>
+    <div class="spotlight-strip">
+      <div class="spotlight-card" id="spotlight-card"></div>
+    </div>
+    <div class="spotlight-dots" id="spotlight-dots"></div>
   </div>
-  <div class="spotlight-dots" id="spotlight-dots"></div>
+
+  <div class="controls">
+    <input type="text" id="search-bar" placeholder="Search by name, parish, or forane…" oninput="filterPriests()">
+  </div>
+
+  <p id="priest-count">Total Priests: 0</p>
+
+  <ul id="priests-list"></ul>
+
 </div>
 
-<div class="controls">
-  <input type="text" id="search-bar" placeholder="Search by name, parish, or forane…" oninput="filterPriests()">
-</div>
+<div id="tab-timeline" class="tab-panel">
 
-<p id="priest-count">Total Priests: 0</p>
+  <div class="controls">
+    <input type="text" id="timeline-search-bar" placeholder="Search by priest name…" oninput="filterTimeline()">
+  </div>
+
+  <ul id="timeline-list"></ul>
+
+</div>
 
 <div id="loading-message">Loading directory…</div>
-
-<ul id="priests-list"></ul>
 
 <script>
 
@@ -559,8 +737,7 @@ async function loadData() {
 
   allPriests = priestsJson.data.map(priest => {
 
-    const ministries = (priest.current_ministry || []).map(m => {
-
+    const mapEntry = (m, isCurrent) => {
       const match = parishes.find(p =>
         normalize(p.parish_name) === normalize(m.parish_name) &&
         normalize(p.parish_place) === normalize(m.parish_place)
@@ -573,20 +750,37 @@ async function loadData() {
         forane: match ? match.forane_name : '',
         primary: m.is_primary_ministry == 1,
         name_prefix: m.name_prefix || '',
-        join_date: m.join_date || ''
+        join_date: m.join_date || '',
+        end_date: m.end_date || m.relieved_date || m.left_date || '',
+        is_current: isCurrent
       };
-    });
+    };
+
+    const ministries = (priest.current_ministry || []).map(m => mapEntry(m, true));
+
+    // Try the common field names a "history" array might use. If none exist,
+    // timelineHistory stays empty and the timeline just shows current postings.
+    const historySource =
+      priest.previous_ministry || priest.past_ministry || priest.ministry_history || [];
+
+    const timelineHistory = (historySource || []).map(m => mapEntry(m, false));
 
     return {
       name: priest.name,
       nickname: priest.nickname,
       photo: priest.photo,
-      ministries
+      ministries,
+      timeline: [...ministries, ...timelineHistory].sort((a, b) => {
+        // Current postings first, then by join_date descending.
+        if (a.is_current !== b.is_current) return a.is_current ? -1 : 1;
+        return new Date(b.join_date || 0) - new Date(a.join_date || 0);
+      })
     };
   });
 
   renderSpotlight(allPriests);
   display(allPriests);
+  renderTimeline(allPriests);
   loadingEl.style.display = 'none';
 }
 
@@ -655,6 +849,76 @@ function filterPriests() {
   );
 
   display(filtered);
+}
+
+/* ---------- Priest timeline tab ---------- */
+
+function formatDate(dateStr) {
+  const d = new Date(dateStr);
+  if (isNaN(d)) return '';
+  return d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
+}
+
+function renderTimeline(priests) {
+  const listEl = document.getElementById('timeline-list');
+  listEl.innerHTML = '';
+
+  const anyHistory = priests.some(p => p.timeline.some(m => !m.is_current));
+
+  if (!anyHistory) {
+    listEl.innerHTML = `
+      <div class="timeline-empty-notice">
+        No past-assignment history was found in the current data — only current postings are available,
+        so the timeline below shows each priest's present ministry only.
+        To see full career timelines, add a "previous_ministry" (or similar) array to each priest's
+        record in priests.json with the same shape as current_ministry, plus an end_date.
+      </div>
+    `;
+  }
+
+  priests.forEach(p => {
+    if (p.timeline.length === 0) return;
+
+    const entriesHtml = p.timeline.map(m => `
+      <div class="timeline-entry${m.is_current ? ' is-current' : ''}">
+        <div class="timeline-entry-designation">
+          ${m.designation}
+          ${m.is_current ? '<span class="timeline-current-tag">Present</span>' : ''}
+        </div>
+        <div class="timeline-entry-parish">${m.parish}, ${m.place}</div>
+        <div class="timeline-entry-dates">
+          ${m.join_date ? formatDate(m.join_date) : 'Date unknown'}
+          –
+          ${m.is_current ? 'Present' : (m.end_date ? formatDate(m.end_date) : 'Date unknown')}
+        </div>
+      </div>
+    `).join('');
+
+    const li = document.createElement('li');
+    li.className = 'timeline-person';
+    li.innerHTML = `
+      <img src="${fixPhoto(p.photo)}" alt="${p.name}" />
+      <div style="flex:1; min-width:0;">
+        <p class="timeline-person-name">${p.name}</p>
+        <div class="timeline-track">${entriesHtml}</div>
+      </div>
+    `;
+    listEl.appendChild(li);
+  });
+}
+
+function filterTimeline() {
+  const q = normalize(document.getElementById('timeline-search-bar').value);
+  const filtered = allPriests.filter(p => normalize(p.name).includes(q) || normalize(p.nickname).includes(q));
+  renderTimeline(filtered);
+}
+
+/* ---------- Tabs ---------- */
+function switchTab(tab) {
+  document.getElementById('tab-directory').classList.toggle('active', tab === 'directory');
+  document.getElementById('tab-timeline').classList.toggle('active', tab === 'timeline');
+  document.getElementById('tab-btn-directory').classList.toggle('active', tab === 'directory');
+  document.getElementById('tab-btn-timeline').classList.toggle('active', tab === 'timeline');
 }
 
 loadData();
