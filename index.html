@@ -39,35 +39,63 @@
 
   /* ---------- Header ---------- */
   header{
-    padding: 48px 20px 28px;
-    text-align: center;
     position: relative;
   }
 
+  .header-top{
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    max-width: 1240px;
+    margin: 0 auto;
+    padding: 18px clamp(16px, 4vw, 40px);
+    border-bottom: 1px solid var(--hairline);
+  }
+
   .logo-container img{
-    width: 132px;
-    height: 64px;
+    width: 48px;
+    height: 48px;
     object-fit: contain;
     border-radius: 50%;
     box-shadow: var(--shadow);
     background: #fff;
-    padding: 6px;
+    padding: 5px;
+    display: block;
+  }
+
+  .brand-text{
+    text-align: left;
+    line-height: 1.25;
   }
 
   .eyebrow{
-    margin: 18px 0 4px;
-    font-size: 12px;
-    letter-spacing: 0.18em;
+    margin: 0;
+    font-size: 11px;
+    letter-spacing: 0.14em;
     text-transform: uppercase;
     color: var(--gold);
     font-weight: 600;
+  }
+
+  .brand-name{
+    margin: 1px 0 0;
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 700;
+    font-size: 18px;
+    color: var(--maroon-deep);
+    letter-spacing: 0.01em;
+  }
+
+  .header-title{
+    text-align: center;
+    padding: 30px 20px 26px;
   }
 
   h1{
     margin: 0;
     font-family: 'Cormorant Garamond', serif;
     font-weight: 700;
-    font-size: clamp(32px, 5vw, 48px);
+    font-size: clamp(30px, 5vw, 44px);
     color: var(--maroon-deep);
     letter-spacing: 0.01em;
   }
@@ -75,22 +103,36 @@
   .rule{
     width: 84px;
     height: 3px;
-    margin: 18px auto 0;
+    margin: 16px auto 0;
     background: linear-gradient(90deg, transparent, var(--gold), transparent);
     border-radius: 2px;
   }
 
   /* ---------- Search & stats ---------- */
+  .toolbar{
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background: rgba(246,241,230,0.92);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    border-bottom: 1px solid var(--hairline);
+  }
+
   .controls{
-    max-width: 560px;
-    margin: 32px auto 6px;
-    padding: 0 20px;
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 14px clamp(16px, 4vw, 40px);
+    display: flex;
+    align-items: center;
+    gap: 14px;
   }
 
   #search-bar{
     display: block;
-    width: 100%;
-    padding: 14px 20px;
+    flex: 1;
+    min-width: 0;
+    padding: 12px 20px;
     border-radius: 999px;
     border: 1.5px solid var(--hairline);
     background: var(--card);
@@ -110,13 +152,23 @@
   }
 
   #priest-count{
-    text-align: center;
-    margin: 16px 0 8px;
-    font-size: 12px;
-    letter-spacing: 0.1em;
+    flex-shrink: 0;
+    margin: 0;
+    padding: 7px 14px;
+    border-radius: 999px;
+    background: rgba(53,82,74,0.1);
+    font-size: 11px;
+    letter-spacing: 0.08em;
     text-transform: uppercase;
     font-weight: 600;
     color: var(--forest);
+    white-space: nowrap;
+  }
+
+  @media (max-width: 520px){
+    .controls{ flex-wrap: wrap; }
+    #search-bar{ order: 1; flex-basis: 100%; }
+    #priest-count{ order: 2; margin: 0 auto; }
   }
 
   #loading-message{
@@ -560,12 +612,19 @@
 <body>
 
 <header>
-  <div class="logo-container">
-    <img src="https://www.archdiocesechanganacherry.org//images/Arch_Logo.jpeg" alt="Archdiocese logo">
+  <div class="header-top">
+    <div class="logo-container">
+      <img src="https://www.archdiocesechanganacherry.org//images/Arch_Logo.jpeg" alt="Archdiocese logo">
+    </div>
+    <div class="brand-text">
+      <p class="eyebrow">Archdiocese of</p>
+      <p class="brand-name">Changanacherry</p>
+    </div>
   </div>
-  <p class="eyebrow">Archdiocese of Changanacherry</p>
-  <h1>Priests Directory</h1>
-  <div class="rule"></div>
+  <div class="header-title">
+    <h1>Priests Directory</h1>
+    <div class="rule"></div>
+  </div>
 </header>
 
 <div class="tabs">
@@ -583,11 +642,12 @@
     <div class="spotlight-dots" id="spotlight-dots"></div>
   </div>
 
-  <div class="controls">
-    <input type="text" id="search-bar" placeholder="Search by name, parish, or forane…" oninput="filterPriests()">
+  <div class="toolbar">
+    <div class="controls">
+      <input type="text" id="search-bar" placeholder="Search by name, parish, or forane…" oninput="filterPriests()">
+      <p id="priest-count">Total: 0</p>
+    </div>
   </div>
-
-  <p id="priest-count">Total Priests: 0</p>
 
   <ul id="priests-list"></ul>
 
@@ -595,8 +655,10 @@
 
 <div id="tab-timeline" class="tab-panel">
 
-  <div class="controls">
-    <input type="text" id="timeline-search-bar" placeholder="Search by priest name…" oninput="filterTimeline()">
+  <div class="toolbar">
+    <div class="controls">
+      <input type="text" id="timeline-search-bar" placeholder="Search by priest name…" oninput="filterTimeline()">
+    </div>
   </div>
 
   <ul id="timeline-list"></ul>
@@ -788,7 +850,7 @@ async function loadData() {
 function display(priests) {
 
   listEl.innerHTML = '';
-  countEl.textContent = `Total Priests: ${priests.length}`;
+  countEl.textContent = `Total: ${priests.length}`;
 
   priests.forEach(p => {
 
