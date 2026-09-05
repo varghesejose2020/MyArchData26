@@ -1,1001 +1,3439 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
 <title>Priests Directory — Archdiocese of Changanacherry</title>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
 <style>
-  :root{
-    --maroon: #7a1f2b;
-    --maroon-deep: #5c161f;
-    --gold: #b8860b;
-    --gold-soft: #d9b96a;
-    --forest: #35524a;
-    --parchment: #f6f1e6;
-    --card: #fffdf9;
-    --ink: #2b2420;
-    --ink-soft: #6b6154;
-    --hairline: #e4dac6;
-    --radius: 14px;
-    --shadow: 0 1px 2px rgba(43,36,32,0.04), 0 8px 24px rgba(43,36,32,0.07);
+
+:root{
+  --maroon:#7a1f2b;
+  --maroon-deep:#5c161f;
+
+  --gold:#b8860b;
+  --gold-soft:#d9b96a;
+
+  --forest:#35524a;
+
+  --parchment:#f6f1e6;
+  --card:#fffdf9;
+
+  --ink:#2b2420;
+  --ink-soft:#6b6154;
+
+  --hairline:#e4dac6;
+
+  --active:#35524a;
+  --retired:#87651b;
+  --demised:#7a1f2b;
+
+  --radius:14px;
+
+  --shadow:
+    0 1px 2px rgba(43,36,32,.04),
+    0 8px 24px rgba(43,36,32,.07);
+}
+
+*{
+  box-sizing:border-box;
+}
+
+html{
+  scroll-behavior:smooth;
+}
+
+body{
+  margin:0;
+
+  background:
+    radial-gradient(
+      1200px 600px at 50% -10%,
+      #fbf6ea 0%,
+      var(--parchment) 55%
+    ),
+    var(--parchment);
+
+  color:var(--ink);
+
+  font-family:'Inter',sans-serif;
+
+  -webkit-font-smoothing:antialiased;
+}
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+header{
+  position:relative;
+}
+
+.header-top{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+
+  gap:14px;
+
+  max-width:1240px;
+
+  margin:0 auto;
+
+  padding:18px clamp(16px,4vw,40px);
+
+  border-bottom:1px solid var(--hairline);
+
+  flex-wrap:wrap;
+}
+
+.brand{
+  display:flex;
+  align-items:center;
+  gap:14px;
+}
+
+.logo-container img{
+  width:48px;
+  height:48px;
+
+  object-fit:contain;
+
+  border-radius:50%;
+
+  box-shadow:var(--shadow);
+
+  background:#fff;
+
+  padding:5px;
+
+  display:block;
+}
+
+.brand-text{
+  text-align:left;
+  line-height:1.25;
+}
+
+.eyebrow{
+  margin:0;
+
+  font-size:11px;
+
+  letter-spacing:.14em;
+
+  text-transform:uppercase;
+
+  color:var(--gold);
+
+  font-weight:600;
+}
+
+.brand-name{
+  margin:1px 0 0;
+
+  font-family:'Cormorant Garamond',serif;
+
+  font-weight:700;
+
+  font-size:18px;
+
+  color:var(--maroon-deep);
+
+  letter-spacing:.01em;
+}
+
+.header-title{
+  text-align:center;
+
+  padding:30px 20px 26px;
+}
+
+h1{
+  margin:0;
+
+  font-family:'Cormorant Garamond',serif;
+
+  font-weight:700;
+
+  font-size:clamp(30px,5vw,44px);
+
+  color:var(--maroon-deep);
+
+  letter-spacing:.01em;
+}
+
+.rule{
+  width:84px;
+  height:3px;
+
+  margin:16px auto 0;
+
+  background:
+    linear-gradient(
+      90deg,
+      transparent,
+      var(--gold),
+      transparent
+    );
+
+  border-radius:2px;
+}
+
+/* =========================================================
+   TOP NAVIGATION
+========================================================= */
+
+.tabs{
+  display:flex;
+
+  gap:6px;
+
+  flex-shrink:0;
+}
+
+.tab-btn{
+  font-family:'Inter',sans-serif;
+
+  font-size:12.5px;
+
+  font-weight:600;
+
+  letter-spacing:.03em;
+
+  color:var(--ink-soft);
+
+  background:var(--card);
+
+  border:1px solid var(--hairline);
+
+  padding:8px 18px;
+
+  border-radius:999px;
+
+  cursor:pointer;
+
+  transition:all .18s ease;
+
+  white-space:nowrap;
+}
+
+.tab-btn:hover{
+  color:var(--maroon);
+
+  border-color:var(--gold-soft);
+}
+
+.tab-btn.active{
+  background:var(--maroon);
+
+  border-color:var(--maroon);
+
+  color:#fff;
+
+  box-shadow:var(--shadow);
+}
+
+.tab-panel{
+  display:none;
+}
+
+.tab-panel.active{
+  display:block;
+}
+
+/* =========================================================
+   STATUS NAVIGATION
+========================================================= */
+
+.status-nav{
+  max-width:1240px;
+
+  margin:18px auto 0;
+
+  padding:0 clamp(16px,4vw,40px);
+}
+
+.status-tabs{
+  display:grid;
+
+  grid-template-columns:
+    repeat(3, minmax(0,1fr));
+
+  gap:10px;
+}
+
+.status-btn{
+  position:relative;
+
+  border:1px solid var(--hairline);
+
+  background:rgba(255,253,249,.82);
+
+  border-radius:13px;
+
+  padding:13px 16px;
+
+  cursor:pointer;
+
+  text-align:left;
+
+  color:var(--ink);
+
+  font-family:'Inter',sans-serif;
+
+  transition:
+    transform .18s ease,
+    border-color .18s ease,
+    box-shadow .18s ease,
+    background .18s ease;
+}
+
+.status-btn:hover{
+  transform:translateY(-1px);
+
+  box-shadow:var(--shadow);
+}
+
+.status-btn.active{
+  background:#fff;
+
+  box-shadow:var(--shadow);
+}
+
+.status-btn.status-active.active{
+  border-color:rgba(53,82,74,.55);
+}
+
+.status-btn.status-retired.active{
+  border-color:rgba(135,101,27,.55);
+}
+
+.status-btn.status-demised.active{
+  border-color:rgba(122,31,43,.55);
+}
+
+.status-label{
+  display:flex;
+
+  align-items:center;
+
+  gap:8px;
+
+  font-weight:700;
+
+  font-size:13px;
+}
+
+.status-dot{
+  width:9px;
+  height:9px;
+
+  border-radius:50%;
+
+  display:inline-block;
+}
+
+.status-active .status-dot{
+  background:var(--active);
+}
+
+.status-retired .status-dot{
+  background:var(--retired);
+}
+
+.status-demised .status-dot{
+  background:var(--demised);
+}
+
+.status-count{
+  margin-top:4px;
+
+  color:var(--ink-soft);
+
+  font-size:11px;
+
+  letter-spacing:.05em;
+
+  text-transform:uppercase;
+}
+
+/* =========================================================
+   SEARCH & TOOLBAR
+========================================================= */
+
+.toolbar{
+  position:sticky;
+
+  top:0;
+
+  z-index:10;
+
+  margin-top:14px;
+
+  background:rgba(246,241,230,.92);
+
+  backdrop-filter:blur(6px);
+
+  -webkit-backdrop-filter:blur(6px);
+
+  border-bottom:1px solid var(--hairline);
+}
+
+.controls{
+  max-width:720px;
+
+  margin:0 auto;
+
+  padding:14px clamp(16px,4vw,40px);
+
+  display:flex;
+
+  align-items:center;
+
+  gap:14px;
+}
+
+#search-bar,
+#timeline-search-bar{
+  display:block;
+
+  flex:1;
+
+  min-width:0;
+
+  padding:12px 20px;
+
+  border-radius:999px;
+
+  border:1.5px solid var(--hairline);
+
+  background:var(--card);
+
+  font-family:'Inter',sans-serif;
+
+  font-size:15px;
+
+  color:var(--ink);
+
+  box-shadow:var(--shadow);
+
+  transition:
+    border-color .2s ease,
+    box-shadow .2s ease;
+}
+
+#search-bar::placeholder,
+#timeline-search-bar::placeholder{
+  color:#a89b85;
+}
+
+#search-bar:focus,
+#timeline-search-bar:focus{
+  outline:none;
+
+  border-color:var(--gold);
+
+  box-shadow:
+    0 0 0 4px rgba(184,134,11,.14),
+    var(--shadow);
+}
+
+#priest-count{
+  flex-shrink:0;
+
+  margin:0;
+
+  padding:7px 14px;
+
+  border-radius:999px;
+
+  background:rgba(53,82,74,.1);
+
+  font-size:11px;
+
+  letter-spacing:.08em;
+
+  text-transform:uppercase;
+
+  font-weight:600;
+
+  color:var(--forest);
+
+  white-space:nowrap;
+}
+
+/* =========================================================
+   RECENTLY JOINED
+========================================================= */
+
+.spotlight-wrap{
+  max-width:1240px;
+
+  margin:30px auto 0;
+
+  padding:0 clamp(16px,4vw,40px);
+}
+
+.spotlight-heading{
+  font-size:11px;
+
+  letter-spacing:.14em;
+
+  text-transform:uppercase;
+
+  color:var(--maroon);
+
+  font-weight:700;
+
+  margin:0 0 12px;
+}
+
+.spotlight-strip{
+  display:flex;
+
+  justify-content:center;
+}
+
+.spotlight-card{
+  width:100%;
+
+  max-width:380px;
+
+  background:
+    linear-gradient(
+      135deg,
+      var(--maroon-deep),
+      var(--maroon) 65%,
+      #8a2532
+    );
+
+  border-radius:var(--radius);
+
+  padding:20px 22px;
+
+  display:flex;
+
+  gap:16px;
+
+  align-items:center;
+
+  box-shadow:
+    0 10px 26px rgba(90,20,25,.26);
+
+  position:relative;
+
+  overflow:hidden;
+
+  transition:
+    opacity .35s ease,
+    transform .35s ease;
+}
+
+.spotlight-card.fade-out{
+  opacity:0;
+
+  transform:translateY(4px);
+}
+
+.spotlight-card::after{
+  content:'';
+
+  position:absolute;
+
+  inset:0;
+
+  background:
+    radial-gradient(
+      180px 180px at 100% 0%,
+      rgba(217,185,106,.22),
+      transparent 70%
+    );
+
+  pointer-events:none;
+}
+
+.spotlight-card img{
+  width:58px;
+  height:74px;
+
+  object-fit:cover;
+
+  border-radius:8px;
+
+  border:2px solid rgba(217,185,106,.55);
+
+  flex-shrink:0;
+}
+
+.spotlight-card-text{
+  min-width:0;
+}
+
+.spotlight-card-name{
+  font-family:'Cormorant Garamond',serif;
+
+  font-weight:700;
+
+  font-size:19px;
+
+  color:#fff;
+
+  margin:0 0 3px;
+
+  line-height:1.2;
+
+  white-space:nowrap;
+
+  overflow:hidden;
+
+  text-overflow:ellipsis;
+}
+
+.spotlight-card-meta{
+  font-size:12.5px;
+
+  color:#f2e6d3;
+
+  margin:0;
+
+  white-space:nowrap;
+
+  overflow:hidden;
+
+  text-overflow:ellipsis;
+}
+
+.spotlight-card-date{
+  font-size:11px;
+
+  color:var(--gold-soft);
+
+  font-weight:600;
+
+  margin-top:5px;
+}
+
+.spotlight-dots{
+  display:flex;
+
+  justify-content:center;
+
+  gap:6px;
+
+  margin-top:12px;
+}
+
+.spotlight-dot{
+  width:6px;
+  height:6px;
+
+  border-radius:50%;
+
+  background:var(--hairline);
+
+  transition:
+    background .25s ease,
+    transform .25s ease;
+}
+
+.spotlight-dot.active{
+  background:var(--maroon);
+
+  transform:scale(1.3);
+}
+
+/* =========================================================
+   PRIEST GRID
+========================================================= */
+
+#priests-list{
+  display:grid;
+
+  grid-template-columns:
+    repeat(auto-fit,minmax(300px,1fr));
+
+  gap:22px;
+
+  padding:24px clamp(16px,4vw,40px) 80px;
+
+  max-width:1240px;
+
+  margin:auto;
+
+  list-style:none;
+}
+
+.priest-item{
+  background:var(--card);
+
+  border:1px solid var(--hairline);
+
+  border-radius:var(--radius);
+
+  padding:18px;
+
+  display:flex;
+
+  gap:14px;
+
+  box-shadow:var(--shadow);
+
+  position:relative;
+
+  transition:
+    transform .18s ease,
+    box-shadow .18s ease;
+}
+
+.priest-item:hover{
+  transform:translateY(-3px);
+
+  box-shadow:
+    0 4px 8px rgba(43,36,32,.05),
+    0 16px 32px rgba(43,36,32,.1);
+}
+
+.priest-item img{
+  width:74px;
+  height:92px;
+
+  object-fit:cover;
+
+  border-radius:8px;
+
+  border:1px solid var(--hairline);
+
+  flex-shrink:0;
+}
+
+.priest-info{
+  flex:1;
+
+  min-width:0;
+}
+
+.priest-item h3{
+  margin:0 0 2px;
+
+  font-family:'Cormorant Garamond',serif;
+
+  font-weight:700;
+
+  font-size:20px;
+
+  color:var(--ink);
+
+  line-height:1.2;
+}
+
+.nickname{
+  margin:0 0 6px;
+
+  font-size:12.5px;
+
+  font-style:italic;
+
+  color:var(--ink-soft);
+}
+
+/* =========================================================
+   STATUS BADGES
+========================================================= */
+
+.status-badge{
+  display:inline-flex;
+
+  align-items:center;
+
+  gap:5px;
+
+  margin-top:5px;
+
+  padding:4px 9px;
+
+  border-radius:999px;
+
+  font-size:9.5px;
+
+  font-weight:700;
+
+  letter-spacing:.08em;
+
+  text-transform:uppercase;
+}
+
+.status-badge::before{
+  content:'';
+
+  width:6px;
+  height:6px;
+
+  border-radius:50%;
+
+  background:currentColor;
+}
+
+.status-badge.active{
+  color:var(--active);
+
+  background:rgba(53,82,74,.1);
+}
+
+.status-badge.retired{
+  color:var(--retired);
+
+  background:rgba(135,101,27,.11);
+}
+
+.status-badge.demised{
+  color:var(--demised);
+
+  background:rgba(122,31,43,.1);
+}
+
+/* =========================================================
+   MINISTRY
+========================================================= */
+
+.ministry-block{
+  margin-top:10px;
+
+  padding-top:10px;
+
+  border-top:1px solid var(--hairline);
+}
+
+.ministry-block:first-of-type{
+  margin-top:8px;
+}
+
+.designation{
+  display:flex;
+
+  align-items:center;
+
+  gap:6px;
+
+  color:var(--maroon);
+
+  font-weight:600;
+
+  font-size:13px;
+
+  text-transform:uppercase;
+
+  letter-spacing:.03em;
+}
+
+.parish{
+  color:var(--forest);
+
+  font-size:13.5px;
+
+  margin-top:2px;
+}
+
+.forane{
+  display:inline-block;
+
+  background:rgba(53,82,74,.1);
+
+  color:var(--forest);
+
+  padding:2px 9px;
+
+  border-radius:6px;
+
+  font-size:10.5px;
+
+  font-weight:600;
+
+  letter-spacing:.03em;
+
+  margin-top:6px;
+}
+
+.appointment-date{
+  font-size:11.5px;
+
+  color:var(--ink-soft);
+
+  margin-top:6px;
+
+  font-weight:500;
+
+  display:flex;
+
+  align-items:center;
+
+  gap:4px;
+}
+
+/* =========================================================
+   RECENT APPOINTMENT
+========================================================= */
+
+.recent-appointment{
+  border-color:var(--gold-soft);
+}
+
+.recent-appointment::before{
+  content:'';
+
+  position:absolute;
+
+  left:0;
+
+  top:14px;
+
+  bottom:14px;
+
+  width:3px;
+
+  border-radius:3px;
+
+  background:
+    linear-gradient(
+      180deg,
+      var(--gold),
+      var(--maroon)
+    );
+}
+
+/* =========================================================
+   NEW SEAL
+========================================================= */
+
+.seal{
+  position:absolute;
+
+  top:-10px;
+
+  right:-8px;
+
+  width:40px;
+
+  height:40px;
+
+  border-radius:50%;
+
+  background:
+    radial-gradient(
+      circle at 32% 30%,
+      #c8940f,
+      var(--maroon) 78%
+    );
+
+  box-shadow:
+    0 3px 6px rgba(90,20,25,.35),
+    inset 0 0 0 2px rgba(255,255,255,.15);
+
+  transform:rotate(-9deg);
+
+  display:flex;
+
+  align-items:center;
+
+  justify-content:center;
+}
+
+.seal::before{
+  content:'+';
+
+  color:#f8ecc9;
+
+  font-family:'Cormorant Garamond',serif;
+
+  font-size:20px;
+
+  font-weight:700;
+
+  line-height:1;
+}
+
+.seal-label{
+  position:absolute;
+
+  top:26px;
+
+  right:-22px;
+
+  font-size:8.5px;
+
+  letter-spacing:.08em;
+
+  color:var(--maroon-deep);
+
+  font-weight:700;
+
+  text-transform:uppercase;
+
+  transform:rotate(-9deg);
+}
+
+/* =========================================================
+   DEMISED CARD
+========================================================= */
+
+.demised-card{
+  border-color:rgba(122,31,43,.25);
+
+  background:
+    linear-gradient(
+      135deg,
+      #fffdf9 0%,
+      #fffaf7 100%
+    );
+}
+
+.demised-card::before{
+  content:'';
+
+  position:absolute;
+
+  left:0;
+
+  top:14px;
+
+  bottom:14px;
+
+  width:3px;
+
+  border-radius:3px;
+
+  background:
+    linear-gradient(
+      180deg,
+      var(--maroon),
+      #b8860b
+    );
+}
+
+/* Rose + cross emblem */
+
+.memorial-emblem{
+  position:absolute;
+
+  top:12px;
+
+  right:12px;
+
+  width:48px;
+
+  height:48px;
+
+  border-radius:50%;
+
+  display:flex;
+
+  align-items:center;
+
+  justify-content:center;
+
+  background:
+    radial-gradient(
+      circle,
+      #fffaf4 35%,
+      #f2dfd7 100%
+    );
+
+  border:1px solid rgba(122,31,43,.22);
+
+  box-shadow:
+    0 3px 10px rgba(122,31,43,.1);
+}
+
+.memorial-emblem::before{
+  content:'✚';
+
+  position:absolute;
+
+  color:var(--maroon-deep);
+
+  font-size:18px;
+
+  font-family:serif;
+
+  z-index:2;
+}
+
+.memorial-emblem::after{
+  content:'🌹';
+
+  font-size:20px;
+
+  transform:
+    translate(-9px,7px)
+    rotate(-12deg);
+
+  filter:saturate(.75);
+}
+
+.memorial-label{
+  position:absolute;
+
+  top:61px;
+
+  right:12px;
+
+  color:var(--maroon);
+
+  font-size:8px;
+
+  font-weight:700;
+
+  letter-spacing:.08em;
+
+  text-transform:uppercase;
+}
+
+/* =========================================================
+   DEMISED DETAILS
+========================================================= */
+
+.demised-details{
+  margin-top:13px;
+
+  padding-top:12px;
+
+  border-top:1px solid var(--hairline);
+
+  display:grid;
+
+  gap:8px;
+}
+
+.detail-row{
+  display:grid;
+
+  grid-template-columns:90px 1fr;
+
+  gap:8px;
+
+  align-items:start;
+}
+
+.detail-label{
+  color:var(--ink-soft);
+
+  font-size:10.5px;
+
+  text-transform:uppercase;
+
+  letter-spacing:.06em;
+
+  font-weight:700;
+}
+
+.detail-value{
+  color:var(--ink);
+
+  font-size:12.5px;
+
+  font-weight:500;
+
+  line-height:1.35;
+}
+
+.home-parish{
+  color:var(--forest);
+
+  font-weight:600;
+}
+
+/* =========================================================
+   EMPTY / LOADING
+========================================================= */
+
+#loading-message{
+  text-align:center;
+
+  margin:60px 20px;
+
+  font-size:15px;
+
+  color:var(--ink-soft);
+}
+
+.empty-message{
+  grid-column:1/-1;
+
+  text-align:center;
+
+  padding:55px 20px;
+
+  color:var(--ink-soft);
+
+  background:rgba(255,253,249,.65);
+
+  border:1px dashed var(--hairline);
+
+  border-radius:var(--radius);
+
+  line-height:1.7;
+}
+
+.empty-icon{
+  font-size:30px;
+
+  margin-bottom:8px;
+}
+
+/* =========================================================
+   TIMELINE
+========================================================= */
+
+#timeline-list{
+  max-width:860px;
+
+  margin:0 auto;
+
+  padding:8px clamp(16px,4vw,40px) 80px;
+
+  list-style:none;
+}
+
+.timeline-person{
+  background:var(--card);
+
+  border:1px solid var(--hairline);
+
+  border-radius:var(--radius);
+
+  box-shadow:var(--shadow);
+
+  padding:20px 22px;
+
+  margin-bottom:18px;
+
+  display:flex;
+
+  gap:16px;
+}
+
+.timeline-person img{
+  width:56px;
+  height:70px;
+
+  object-fit:cover;
+
+  border-radius:8px;
+
+  border:1px solid var(--hairline);
+
+  flex-shrink:0;
+}
+
+.timeline-person-name{
+  font-family:'Cormorant Garamond',serif;
+
+  font-weight:700;
+
+  font-size:19px;
+
+  margin:0 0 12px;
+
+  color:var(--ink);
+}
+
+.timeline-track{
+  position:relative;
+
+  padding-left:22px;
+}
+
+.timeline-track::before{
+  content:'';
+
+  position:absolute;
+
+  left:5px;
+
+  top:6px;
+
+  bottom:6px;
+
+  width:2px;
+
+  background:var(--hairline);
+}
+
+.timeline-entry{
+  position:relative;
+
+  padding-bottom:16px;
+}
+
+.timeline-entry:last-child{
+  padding-bottom:0;
+}
+
+.timeline-entry::before{
+  content:'';
+
+  position:absolute;
+
+  left:-22px;
+
+  top:4px;
+
+  width:11px;
+
+  height:11px;
+
+  border-radius:50%;
+
+  background:var(--card);
+
+  border:2px solid var(--hairline);
+}
+
+.timeline-entry.is-current::before{
+  border-color:var(--gold);
+
+  background:var(--gold);
+
+  box-shadow:
+    0 0 0 3px rgba(184,134,11,.15);
+}
+
+.timeline-entry-designation{
+  font-size:13px;
+
+  font-weight:600;
+
+  color:var(--maroon);
+
+  display:flex;
+
+  align-items:center;
+
+  gap:8px;
+}
+
+.timeline-current-tag{
+  font-size:9.5px;
+
+  letter-spacing:.06em;
+
+  text-transform:uppercase;
+
+  font-weight:700;
+
+  color:var(--gold);
+
+  border:1px solid var(--gold-soft);
+
+  padding:1px 7px;
+
+  border-radius:999px;
+}
+
+.timeline-entry-parish{
+  font-size:13.5px;
+
+  color:var(--forest);
+
+  margin-top:2px;
+}
+
+.timeline-entry-dates{
+  font-size:11.5px;
+
+  color:var(--ink-soft);
+
+  margin-top:3px;
+}
+
+.timeline-empty-notice{
+  max-width:640px;
+
+  margin:40px auto;
+
+  padding:20px 24px;
+
+  text-align:center;
+
+  background:var(--card);
+
+  border:1px dashed var(--hairline);
+
+  border-radius:var(--radius);
+
+  color:var(--ink-soft);
+
+  font-size:13.5px;
+
+  line-height:1.6;
+}
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media(max-width:700px){
+
+  .status-tabs{
+    grid-template-columns:1fr;
   }
 
-  *{ box-sizing: border-box; }
-
-  body{
-    margin: 0;
-    background:
-      radial-gradient(1200px 600px at 50% -10%, #fbf6ea 0%, var(--parchment) 55%),
-      var(--parchment);
-    color: var(--ink);
-    font-family: 'Inter', sans-serif;
-    -webkit-font-smoothing: antialiased;
+  .status-btn{
+    text-align:center;
   }
 
-  /* ---------- Header ---------- */
-  header{
-    position: relative;
+  .status-label{
+    justify-content:center;
   }
+
+  .status-count{
+    text-align:center;
+  }
+}
+
+@media(max-width:560px){
 
   .header-top{
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 14px;
-    max-width: 1240px;
-    margin: 0 auto;
-    padding: 18px clamp(16px, 4vw, 40px);
-    border-bottom: 1px solid var(--hairline);
-    flex-wrap: wrap;
+    justify-content:center;
   }
 
   .brand{
-    display: flex;
-    align-items: center;
-    gap: 14px;
+    flex:1 1 100%;
+
+    justify-content:center;
   }
 
-  .logo-container img{
-    width: 48px;
-    height: 48px;
-    object-fit: contain;
-    border-radius: 50%;
-    box-shadow: var(--shadow);
-    background: #fff;
-    padding: 5px;
-    display: block;
-  }
+  .tabs{
+    flex:1 1 100%;
 
-  .brand-text{
-    text-align: left;
-    line-height: 1.25;
-  }
-
-  .eyebrow{
-    margin: 0;
-    font-size: 11px;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    color: var(--gold);
-    font-weight: 600;
-  }
-
-  .brand-name{
-    margin: 1px 0 0;
-    font-family: 'Cormorant Garamond', serif;
-    font-weight: 700;
-    font-size: 18px;
-    color: var(--maroon-deep);
-    letter-spacing: 0.01em;
-  }
-
-  .header-title{
-    text-align: center;
-    padding: 30px 20px 26px;
-  }
-
-  h1{
-    margin: 0;
-    font-family: 'Cormorant Garamond', serif;
-    font-weight: 700;
-    font-size: clamp(30px, 5vw, 44px);
-    color: var(--maroon-deep);
-    letter-spacing: 0.01em;
-  }
-
-  .rule{
-    width: 84px;
-    height: 3px;
-    margin: 16px auto 0;
-    background: linear-gradient(90deg, transparent, var(--gold), transparent);
-    border-radius: 2px;
-  }
-
-  /* ---------- Search & stats ---------- */
-  .toolbar{
-    position: sticky;
-    top: 0;
-    z-index: 10;
-    background: rgba(246,241,230,0.92);
-    backdrop-filter: blur(6px);
-    -webkit-backdrop-filter: blur(6px);
-    border-bottom: 1px solid var(--hairline);
+    justify-content:center;
   }
 
   .controls{
-    max-width: 720px;
-    margin: 0 auto;
-    padding: 14px clamp(16px, 4vw, 40px);
-    display: flex;
-    align-items: center;
-    gap: 14px;
+    flex-wrap:wrap;
   }
 
-  #search-bar{
-    display: block;
-    flex: 1;
-    min-width: 0;
-    padding: 12px 20px;
-    border-radius: 999px;
-    border: 1.5px solid var(--hairline);
-    background: var(--card);
-    font-family: 'Inter', sans-serif;
-    font-size: 15px;
-    color: var(--ink);
-    box-shadow: var(--shadow);
-    transition: border-color 0.2s ease, box-shadow 0.2s ease;
-  }
+  #search-bar,
+  #timeline-search-bar{
+    order:1;
 
-  #search-bar::placeholder{ color: #a89b85; }
-
-  #search-bar:focus{
-    outline: none;
-    border-color: var(--gold);
-    box-shadow: 0 0 0 4px rgba(184,134,11,0.14), var(--shadow);
+    flex-basis:100%;
   }
 
   #priest-count{
-    flex-shrink: 0;
-    margin: 0;
-    padding: 7px 14px;
-    border-radius: 999px;
-    background: rgba(53,82,74,0.1);
-    font-size: 11px;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    font-weight: 600;
-    color: var(--forest);
-    white-space: nowrap;
-  }
+    order:2;
 
-  @media (max-width: 560px){
-    .header-top{ justify-content: center; }
-    .brand{ flex: 1 1 100%; justify-content: center; }
-    .tabs{ flex: 1 1 100%; justify-content: center; }
+    margin:0 auto;
   }
+}
 
-  @media (max-width: 520px){
-    .controls{ flex-wrap: wrap; }
-    #search-bar{ order: 1; flex-basis: 100%; }
-    #priest-count{ order: 2; margin: 0 auto; }
-  }
-
-  #loading-message{
-    text-align: center;
-    margin: 60px 20px;
-    font-size: 15px;
-    color: var(--ink-soft);
-  }
-
-  /* ---------- Grid ---------- */
-  #priests-list{
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 22px;
-    padding: 24px clamp(16px, 4vw, 40px) 80px;
-    max-width: 1240px;
-    margin: auto;
-    list-style: none;
-  }
+@media(max-width:420px){
 
   .priest-item{
-    background: var(--card);
-    border: 1px solid var(--hairline);
-    border-radius: var(--radius);
-    padding: 18px;
-    display: flex;
-    gap: 14px;
-    box-shadow: var(--shadow);
-    position: relative;
-    transition: transform 0.18s ease, box-shadow 0.18s ease;
-  }
+    padding:14px;
 
-  .priest-item:hover{
-    transform: translateY(-3px);
-    box-shadow: 0 4px 8px rgba(43,36,32,0.05), 0 16px 32px rgba(43,36,32,0.1);
+    gap:10px;
   }
 
   .priest-item img{
-    width: 74px;
-    height: 92px;
-    object-fit: cover;
-    border-radius: 8px;
-    border: 1px solid var(--hairline);
-    flex-shrink: 0;
+    width:62px;
+
+    height:78px;
   }
 
-  .priest-info{ flex: 1; min-width: 0; }
+  .memorial-emblem{
+    width:40px;
 
-  .priest-item h3{
-    margin: 0 0 2px;
-    font-family: 'Cormorant Garamond', serif;
-    font-weight: 700;
-    font-size: 20px;
-    color: var(--ink);
-    line-height: 1.2;
+    height:40px;
+
+    top:10px;
+
+    right:10px;
   }
 
-  .nickname{
-    margin: 0 0 6px;
-    font-size: 12.5px;
-    font-style: italic;
-    color: var(--ink-soft);
+  .memorial-label{
+    top:52px;
+
+    right:10px;
   }
 
-  .ministry-block{
-    margin-top: 10px;
-    padding-top: 10px;
-    border-top: 1px solid var(--hairline);
-  }
-
-  .ministry-block:first-of-type{
-    margin-top: 8px;
-  }
-
-  .designation{
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    color: var(--maroon);
-    font-weight: 600;
-    font-size: 13px;
-    text-transform: uppercase;
-    letter-spacing: 0.03em;
-  }
-
-  .parish{
-    color: var(--forest);
-    font-size: 13.5px;
-    margin-top: 2px;
-  }
-
-  .forane{
-    display: inline-block;
-    background: rgba(53,82,74,0.1);
-    color: var(--forest);
-    padding: 2px 9px;
-    border-radius: 6px;
-    font-size: 10.5px;
-    font-weight: 600;
-    letter-spacing: 0.03em;
-    margin-top: 6px;
-  }
-
-  .appointment-date{
-    font-size: 11.5px;
-    color: var(--ink-soft);
-    margin-top: 6px;
-    font-weight: 500;
-    display: flex;
-    align-items: center;
-    gap: 4px;
-  }
-
-  /* Recent appointment framing — quiet gold rail, not a loud box */
-  .recent-appointment{
-    border-color: var(--gold-soft);
-  }
-
-  .recent-appointment::before{
-    content: '';
-    position: absolute;
-    left: 0;
-    top: 14px;
-    bottom: 14px;
-    width: 3px;
-    border-radius: 3px;
-    background: linear-gradient(180deg, var(--gold), var(--maroon));
-  }
-
-  /* Wax-seal "new appointment" badge — the signature element */
-  .seal{
-    position: absolute;
-    top: -10px;
-    right: -8px;
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    background: radial-gradient(circle at 32% 30%, #c8940f, var(--maroon) 78%);
-    box-shadow: 0 3px 6px rgba(90,20,25,0.35), inset 0 0 0 2px rgba(255,255,255,0.15);
-    transform: rotate(-9deg);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .seal::before{
-    content: '+';
-    color: #f8ecc9;
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 20px;
-    font-weight: 700;
-    line-height: 1;
-  }
-
-  .seal-label{
-    position: absolute;
-    top: 26px;
-    right: -22px;
-    font-size: 8.5px;
-    letter-spacing: 0.08em;
-    color: var(--maroon-deep);
-    font-weight: 700;
-    text-transform: uppercase;
-    transform: rotate(-9deg);
-  }
-
-  @media (max-width: 420px){
-    .priest-item{ padding: 14px; gap: 10px; }
-    .priest-item img{ width: 62px; height: 78px; }
-  }
-
-  /* ---------- Recently joined strip ---------- */
-  .spotlight-wrap{
-    max-width: 1240px;
-    margin: 30px auto 0;
-    padding: 0 clamp(16px, 4vw, 40px);
-  }
-
-  .spotlight-heading{
-    font-size: 11px;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    color: var(--maroon);
-    font-weight: 700;
-    margin: 0 0 12px;
-  }
-
-  .spotlight-strip{
-    display: flex;
-    justify-content: center;
-  }
-
-  .spotlight-card{
-    width: 100%;
-    max-width: 380px;
-    background: linear-gradient(135deg, var(--maroon-deep), var(--maroon) 65%, #8a2532);
-    border-radius: var(--radius);
-    padding: 20px 22px;
-    display: flex;
-    gap: 16px;
-    align-items: center;
-    box-shadow: 0 10px 26px rgba(90,20,25,0.26);
-    position: relative;
-    overflow: hidden;
-    transition: opacity 0.35s ease, transform 0.35s ease;
-  }
-
-  .spotlight-card.fade-out{
-    opacity: 0;
-    transform: translateY(4px);
-  }
-
-  .spotlight-card::after{
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: radial-gradient(180px 180px at 100% 0%, rgba(217,185,106,0.22), transparent 70%);
-    pointer-events: none;
-  }
-
-  .spotlight-card img{
-    width: 58px;
-    height: 74px;
-    object-fit: cover;
-    border-radius: 8px;
-    border: 2px solid rgba(217,185,106,0.55);
-    flex-shrink: 0;
-  }
-
-  .spotlight-card-text{ min-width: 0; }
-
-  .spotlight-card-name{
-    font-family: 'Cormorant Garamond', serif;
-    font-weight: 700;
-    font-size: 19px;
-    color: #fff;
-    margin: 0 0 3px;
-    line-height: 1.2;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-
-  .spotlight-card-meta{
-    font-size: 12.5px;
-    color: #f2e6d3;
-    margin: 0;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-
-  .spotlight-card-date{
-    font-size: 11px;
-    color: var(--gold-soft);
-    font-weight: 600;
-    margin-top: 5px;
-  }
-
-  .spotlight-dots{
-    display: flex;
-    justify-content: center;
-    gap: 6px;
-    margin-top: 12px;
-  }
-
-  .spotlight-dot{
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
-    background: var(--hairline);
-    transition: background 0.25s ease, transform 0.25s ease;
-  }
-
-  .spotlight-dot.active{
-    background: var(--maroon);
-    transform: scale(1.3);
-  }
-
-  /* ---------- Tabs ---------- */
-  .tabs{
-    display: flex;
-    gap: 6px;
-    flex-shrink: 0;
-  }
-
-  .tab-btn{
-    font-family: 'Inter', sans-serif;
-    font-size: 12.5px;
-    font-weight: 600;
-    letter-spacing: 0.03em;
-    color: var(--ink-soft);
-    background: var(--card);
-    border: 1px solid var(--hairline);
-    padding: 8px 18px;
-    border-radius: 999px;
-    cursor: pointer;
-    transition: all 0.18s ease;
-    white-space: nowrap;
-  }
-
-  .tab-btn:hover{
-    color: var(--maroon);
-    border-color: var(--gold-soft);
-  }
-
-  .tab-btn.active{
-    background: var(--maroon);
-    border-color: var(--maroon);
-    color: #fff;
-    box-shadow: var(--shadow);
-  }
-
-  .tab-panel{ display: none; }
-  .tab-panel.active{ display: block; }
-
-  /* ---------- Priest timeline ---------- */
-  #timeline-list{
-    max-width: 860px;
-    margin: 0 auto;
-    padding: 8px clamp(16px, 4vw, 40px) 80px;
-    list-style: none;
+  .detail-row{
+    grid-template-columns:78px 1fr;
   }
 
   .timeline-person{
-    background: var(--card);
-    border: 1px solid var(--hairline);
-    border-radius: var(--radius);
-    box-shadow: var(--shadow);
-    padding: 20px 22px;
-    margin-bottom: 18px;
-    display: flex;
-    gap: 16px;
+    padding:15px;
+
+    gap:12px;
   }
 
-  .timeline-person img{
-    width: 56px;
-    height: 70px;
-    object-fit: cover;
-    border-radius: 8px;
-    border: 1px solid var(--hairline);
-    flex-shrink: 0;
-  }
+}
 
-  .timeline-person-name{
-    font-family: 'Cormorant Garamond', serif;
-    font-weight: 700;
-    font-size: 19px;
-    margin: 0 0 12px;
-    color: var(--ink);
-  }
-
-  .timeline-track{
-    position: relative;
-    padding-left: 22px;
-  }
-
-  .timeline-track::before{
-    content: '';
-    position: absolute;
-    left: 5px;
-    top: 6px;
-    bottom: 6px;
-    width: 2px;
-    background: var(--hairline);
-  }
-
-  .timeline-entry{
-    position: relative;
-    padding-bottom: 16px;
-  }
-
-  .timeline-entry:last-child{ padding-bottom: 0; }
-
-  .timeline-entry::before{
-    content: '';
-    position: absolute;
-    left: -22px;
-    top: 4px;
-    width: 11px;
-    height: 11px;
-    border-radius: 50%;
-    background: var(--card);
-    border: 2px solid var(--hairline);
-  }
-
-  .timeline-entry.is-current::before{
-    border-color: var(--gold);
-    background: var(--gold);
-    box-shadow: 0 0 0 3px rgba(184,134,11,0.15);
-  }
-
-  .timeline-entry-designation{
-    font-size: 13px;
-    font-weight: 600;
-    color: var(--maroon);
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
-
-  .timeline-current-tag{
-    font-size: 9.5px;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    font-weight: 700;
-    color: var(--gold);
-    border: 1px solid var(--gold-soft);
-    padding: 1px 7px;
-    border-radius: 999px;
-  }
-
-  .timeline-entry-parish{
-    font-size: 13.5px;
-    color: var(--forest);
-    margin-top: 2px;
-  }
-
-  .timeline-entry-dates{
-    font-size: 11.5px;
-    color: var(--ink-soft);
-    margin-top: 3px;
-  }
-
-  .timeline-empty-notice{
-    max-width: 640px;
-    margin: 40px auto;
-    padding: 20px 24px;
-    text-align: center;
-    background: var(--card);
-    border: 1px dashed var(--hairline);
-    border-radius: var(--radius);
-    color: var(--ink-soft);
-    font-size: 13.5px;
-    line-height: 1.6;
-  }
 </style>
 </head>
 
 <body>
 
 <header>
+
   <div class="header-top">
+
     <div class="brand">
+
       <div class="logo-container">
-        <img src="https://www.archdiocesechanganacherry.org//images/Arch_Logo.jpeg" alt="Archdiocese logo">
+        <img
+          src="https://www.archdiocesechanganacherry.org//images/Arch_Logo.jpeg"
+          alt="Archdiocese logo"
+        >
       </div>
+
       <div class="brand-text">
         <p class="eyebrow">Archdiocese of</p>
         <p class="brand-name">Changanacherry</p>
       </div>
+
     </div>
+
     <div class="tabs">
-      <button class="tab-btn active" id="tab-btn-directory" onclick="switchTab('directory')">Directory</button>
-      <button class="tab-btn" id="tab-btn-timeline" onclick="switchTab('timeline')">Priest Timeline</button>
+
+      <button
+        class="tab-btn active"
+        id="tab-btn-directory"
+        onclick="switchTab('directory')"
+      >
+        Directory
+      </button>
+
+      <button
+        class="tab-btn"
+        id="tab-btn-timeline"
+        onclick="switchTab('timeline')"
+      >
+        Priest Timeline
+      </button>
+
     </div>
+
   </div>
+
   <div class="header-title">
+
     <h1>Priests Directory</h1>
+
     <div class="rule"></div>
+
   </div>
+
 </header>
 
-<div id="tab-directory" class="tab-panel active">
 
-  <div id="spotlight-wrap" class="spotlight-wrap" style="display:none;">
-    <p class="spotlight-heading">Recently Joined</p>
-    <div class="spotlight-strip">
-      <div class="spotlight-card" id="spotlight-card"></div>
+<!-- =========================================================
+     DIRECTORY TAB
+========================================================= -->
+
+<div
+  id="tab-directory"
+  class="tab-panel active"
+>
+
+  <!-- STATUS TABS -->
+
+  <div class="status-nav">
+
+    <div class="status-tabs">
+
+      <button
+        class="status-btn status-active active"
+        id="status-btn-active"
+        onclick="switchStatus('Active')"
+      >
+
+        <div class="status-label">
+
+          <span class="status-dot"></span>
+
+          Active
+
+        </div>
+
+        <div
+          class="status-count"
+          id="status-count-active"
+        >
+          0 priests
+        </div>
+
+      </button>
+
+
+      <button
+        class="status-btn status-retired"
+        id="status-btn-retired"
+        onclick="switchStatus('Retired')"
+      >
+
+        <div class="status-label">
+
+          <span class="status-dot"></span>
+
+          Retired
+
+        </div>
+
+        <div
+          class="status-count"
+          id="status-count-retired"
+        >
+          0 priests
+        </div>
+
+      </button>
+
+
+      <button
+        class="status-btn status-demised"
+        id="status-btn-demised"
+        onclick="switchStatus('Demised')"
+      >
+
+        <div class="status-label">
+
+          <span class="status-dot"></span>
+
+          Demised
+
+        </div>
+
+        <div
+          class="status-count"
+          id="status-count-demised"
+        >
+          0 priests
+        </div>
+
+      </button>
+
     </div>
-    <div class="spotlight-dots" id="spotlight-dots"></div>
+
   </div>
+
+
+  <!-- RECENTLY JOINED -->
+
+  <div
+    id="spotlight-wrap"
+    class="spotlight-wrap"
+    style="display:none;"
+  >
+
+    <p class="spotlight-heading">
+      Recently Joined
+    </p>
+
+    <div class="spotlight-strip">
+
+      <div
+        class="spotlight-card"
+        id="spotlight-card"
+      ></div>
+
+    </div>
+
+    <div
+      class="spotlight-dots"
+      id="spotlight-dots"
+    ></div>
+
+  </div>
+
+
+  <!-- SEARCH -->
 
   <div class="toolbar">
+
     <div class="controls">
-      <input type="text" id="search-bar" placeholder="Search by name, parish, or forane…" oninput="filterPriests()">
-      <p id="priest-count">Total: 0</p>
+
+      <input
+        type="text"
+        id="search-bar"
+        placeholder="Search by name, parish, forane, or home parish…"
+        oninput="filterPriests()"
+      >
+
+      <p id="priest-count">
+        Total: 0
+      </p>
+
     </div>
+
   </div>
+
+
+  <!-- PRIEST LIST -->
 
   <ul id="priests-list"></ul>
 
 </div>
 
-<div id="tab-timeline" class="tab-panel">
+
+<!-- =========================================================
+     TIMELINE TAB
+========================================================= -->
+
+<div
+  id="tab-timeline"
+  class="tab-panel"
+>
 
   <div class="toolbar">
+
     <div class="controls">
-      <input type="text" id="timeline-search-bar" placeholder="Search by priest name…" oninput="filterTimeline()">
+
+      <input
+        type="text"
+        id="timeline-search-bar"
+        placeholder="Search by priest name…"
+        oninput="filterTimeline()"
+      >
+
     </div>
+
   </div>
 
   <ul id="timeline-list"></ul>
 
 </div>
 
-<div id="loading-message">Loading directory…</div>
+
+<div id="loading-message">
+  Loading directory…
+</div>
+
 
 <script>
 
+/* =========================================================
+   DATA CONFIGURATION
+========================================================= */
+
 const jsonUrl = 'priests.json';
+
 const parishUrl = 'parishes.json';
 
 let allPriests = [];
 
-const listEl = document.getElementById('priests-list');
-const countEl = document.getElementById('priest-count');
-const loadingEl = document.getElementById('loading-message');
+let selectedStatus = 'Active';
 
-/* Normalize */
-function normalize(str) {
+let spotlightEntries = [];
+
+let spotlightIndex = 0;
+
+let spotlightTimer = null;
+
+
+const listEl =
+  document.getElementById('priests-list');
+
+const countEl =
+  document.getElementById('priest-count');
+
+const loadingEl =
+  document.getElementById('loading-message');
+
+
+/* =========================================================
+   NORMALIZE
+========================================================= */
+
+function normalize(str){
+
   return (str || '')
     .replace(/’/g, "'")
     .replace(/[^a-z0-9\s]/gi, '')
     .toLowerCase()
     .trim();
+
 }
 
-/* Fix photo */
-function fixPhoto(url) {
-  if (!url) return '';
-  if (url.startsWith('http')) return url;
-  return url.replace(/^\.\/?/, 'https://myparish.archeparchybookkeeping.org/');
+
+/* =========================================================
+   STATUS NORMALIZATION
+========================================================= */
+
+function normalizeStatus(status){
+
+  const value =
+    normalize(status);
+
+  if(value === 'active')
+    return 'Active';
+
+  if(
+    value === 'retired' ||
+    value === 'retire'
+  )
+    return 'Retired';
+
+  if(
+    value === 'demised' ||
+    value === 'deceased' ||
+    value === 'dead'
+  )
+    return 'Demised';
+
+  /*
+   * If no status exists, keep the priest
+   * in Active as a safe default.
+   */
+
+  return 'Active';
+
 }
 
-/* Check recent join date (30 days) */
-function isRecent(dateStr) {
-  if (!dateStr) return false;
-  const d = new Date(dateStr);
-  const diffDays = (new Date() - d) / (1000 * 60 * 60 * 24);
-  return diffDays <= 30;
+
+/* =========================================================
+   PHOTO
+========================================================= */
+
+function fixPhoto(url){
+
+  if(!url)
+    return 'https://myparish.archeparchybookkeeping.org/resources/img/default_icon.jpg';
+
+  if(url.startsWith('http'))
+    return url;
+
+  return url.replace(
+    /^\.\/?/,
+    'https://myparish.archeparchybookkeeping.org/'
+  );
+
 }
 
-/* Get appointments within the last `days` days, one entry per priest (their latest ministry date), newest first */
-function getRecentAppointments(priests, days = 30) {
+
+/* =========================================================
+   DATE PARSER
+========================================================= */
+
+function parseDate(dateStr){
+
+  if(!dateStr)
+    return null;
+
+  const value =
+    String(dateStr).trim();
+
+  /*
+   * ISO date:
+   * YYYY-MM-DD
+   */
+
+  if(/^\d{4}-\d{2}-\d{2}$/.test(value)){
+
+    const d =
+      new Date(value + 'T00:00:00');
+
+    return isNaN(d)
+      ? null
+      : d;
+
+  }
+
+
+  /*
+   * DD/MM/YYYY
+   */
+
+  if(/^\d{2}\/\d{2}\/\d{4}$/.test(value)){
+
+    const parts =
+      value.split('/');
+
+    const d =
+      new Date(
+        Number(parts[2]),
+        Number(parts[1]) - 1,
+        Number(parts[0])
+      );
+
+    return isNaN(d)
+      ? null
+      : d;
+
+  }
+
+
+  const d =
+    new Date(value);
+
+  return isNaN(d)
+    ? null
+    : d;
+
+}
+
+
+/* =========================================================
+   FORMAT DATE
+========================================================= */
+
+function formatDate(dateStr){
+
+  const d =
+    parseDate(dateStr);
+
+  if(!d)
+    return '';
+
+  return d.toLocaleDateString(
+    'en-GB',
+    {
+      day:'2-digit',
+      month:'2-digit',
+      year:'numeric'
+    }
+  );
+
+}
+
+
+/* =========================================================
+   RECENT APPOINTMENT
+========================================================= */
+
+function isRecent(dateStr){
+
+  const d =
+    parseDate(dateStr);
+
+  if(!d)
+    return false;
+
+  const now =
+    new Date();
+
+  const diffDays =
+    (now - d) /
+    (1000 * 60 * 60 * 24);
+
+  return diffDays >= 0 && diffDays <= 30;
+
+}
+
+
+/* =========================================================
+   RECENT APPOINTMENTS
+========================================================= */
+
+function getRecentAppointments(
+  priests,
+  days = 30
+){
+
   const entries = [];
 
   priests.forEach(p => {
-    let latestForPriest = null; // { ministry, date }
 
-    p.ministries.forEach(m => {
-      if (!m.join_date) return;
-      const d = new Date(m.join_date);
-      if (isNaN(d)) return;
-      if (!latestForPriest || d > latestForPriest.date) {
-        latestForPriest = { ministry: m, date: d };
+    /*
+     * Recently Joined applies only to
+     * active priests/current ministries.
+     */
+
+    if(p.status !== 'Active')
+      return;
+
+    let latestForPriest = null;
+
+    (p.ministries || []).forEach(m => {
+
+      if(!m.join_date)
+        return;
+
+      const d =
+        parseDate(m.join_date);
+
+      if(!d)
+        return;
+
+      if(
+        !latestForPriest ||
+        d > latestForPriest.date
+      ){
+
+        latestForPriest = {
+          ministry:m,
+          date:d
+        };
+
       }
+
     });
 
-    if (latestForPriest && isRecent(latestForPriest.ministry.join_date)) {
-      entries.push({ priest: p, ministry: latestForPriest.ministry, date: latestForPriest.date });
+
+    if(
+      latestForPriest &&
+      isRecent(
+        latestForPriest.ministry.join_date
+      )
+    ){
+
+      entries.push({
+        priest:p,
+        ministry:
+          latestForPriest.ministry,
+        date:
+          latestForPriest.date
+      });
+
     }
+
   });
 
-  entries.sort((a, b) => b.date - a.date);
-  return entries;
-}
 
-/* Render the "Recently Joined" single-card auto-rotator */
-let spotlightEntries = [];
-let spotlightIndex = 0;
-let spotlightTimer = null;
-
-function spotlightCardHtml(entry) {
-  return `
-    <img src="${fixPhoto(entry.priest.photo)}" alt="${entry.priest.name}">
-    <div class="spotlight-card-text">
-      <p class="spotlight-card-name">${entry.ministry.name_prefix || ''} ${entry.priest.name}</p>
-      <p class="spotlight-card-meta">${entry.ministry.parish}, ${entry.ministry.place}</p>
-      <p class="spotlight-card-date">${entry.date.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })}</p>
-    </div>
-  `;
-}
-
-function showSpotlightCard(index) {
-  const cardEl = document.getElementById('spotlight-card');
-  const dotsEl = document.getElementById('spotlight-dots');
-
-  spotlightIndex = index;
-  cardEl.classList.add('fade-out');
-
-  setTimeout(() => {
-    cardEl.innerHTML = spotlightCardHtml(spotlightEntries[spotlightIndex]);
-    cardEl.classList.remove('fade-out');
-  }, 350);
-
-  [...dotsEl.children].forEach((dot, i) => dot.classList.toggle('active', i === index));
-}
-
-function renderSpotlight(priests) {
-  const wrap = document.getElementById('spotlight-wrap');
-  const dotsEl = document.getElementById('spotlight-dots');
-
-  spotlightEntries = getRecentAppointments(priests);
-  if (spotlightTimer) clearInterval(spotlightTimer);
-
-  if (spotlightEntries.length === 0) {
-    wrap.style.display = 'none';
-    return;
-  }
-
-  dotsEl.innerHTML = spotlightEntries.map(() => `<div class="spotlight-dot"></div>`).join('');
-
-  document.getElementById('spotlight-card').innerHTML = spotlightCardHtml(spotlightEntries[0]);
-  [...dotsEl.children][0]?.classList.add('active');
-  spotlightIndex = 0;
-
-  wrap.style.display = 'block';
-
-  if (spotlightEntries.length > 1) {
-    spotlightTimer = setInterval(() => {
-      showSpotlightCard((spotlightIndex + 1) % spotlightEntries.length);
-    }, 3200);
-  }
-}
-
-/* Load data */
-async function loadData() {
-  const [priestsRes, parishesRes] = await Promise.all([
-    fetch(jsonUrl),
-    fetch(parishUrl)
-  ]);
-
-  const priestsJson = await priestsRes.json();
-  const parishesJson = await parishesRes.json();
-
-  const parishes = parishesJson.data;
-
-  allPriests = priestsJson.data.map(priest => {
-
-    const mapEntry = (m, isCurrent) => {
-      const match = parishes.find(p =>
-        normalize(p.parish_name) === normalize(m.parish_name) &&
-        normalize(p.parish_place) === normalize(m.parish_place)
-      );
-
-      return {
-        parish: m.parish_name,
-        place: m.parish_place,
-        designation: m.ministry_designation_name,
-        forane: match ? match.forane_name : '',
-        primary: m.is_primary_ministry == 1,
-        name_prefix: m.name_prefix || '',
-        join_date: m.join_date || '',
-        end_date: m.end_date || m.relieved_date || m.left_date || '',
-        is_current: isCurrent
-      };
-    };
-
-    const ministries = (priest.current_ministry || []).map(m => mapEntry(m, true));
-
-    // Try the common field names a "history" array might use. If none exist,
-    // timelineHistory stays empty and the timeline just shows current postings.
-    const historySource =
-      priest.previous_ministry || priest.past_ministry || priest.ministry_history || [];
-
-    const timelineHistory = (historySource || []).map(m => mapEntry(m, false));
-
-    return {
-      name: priest.name,
-      nickname: priest.nickname,
-      photo: priest.photo,
-      ministries,
-      timeline: [...ministries, ...timelineHistory].sort((a, b) => {
-        // Current postings first, then by join_date descending.
-        if (a.is_current !== b.is_current) return a.is_current ? -1 : 1;
-        return new Date(b.join_date || 0) - new Date(a.join_date || 0);
-      })
-    };
-  });
-
-  renderSpotlight(allPriests);
-  display(allPriests);
-  renderTimeline(allPriests);
-  loadingEl.style.display = 'none';
-}
-
-/* Display priests */
-function display(priests) {
-
-  listEl.innerHTML = '';
-  countEl.textContent = `Total: ${priests.length}`;
-
-  priests.forEach(p => {
-
-    const hasRecent = p.ministries.some(m => isRecent(m.join_date));
-
-    const prefix = p.ministries.find(m => m.primary)?.name_prefix || '';
-
-    const ministriesHtml = p.ministries.map(m => `
-      <div class="ministry-block">
-
-        <div class="designation">
-          ${m.designation}
-        </div>
-
-        <div class="parish">${m.parish}, ${m.place}</div>
-
-        ${m.forane ? `<div class="forane">${m.forane}</div>` : ''}
-
-        ${m.join_date ? `
-          <div class="appointment-date">
-            Appointed ${new Date(m.join_date).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })}
-          </div>
-        ` : ''}
-
-      </div>
-    `).join('');
-
-    const li = document.createElement('li');
-    li.className = 'priest-item' + (hasRecent ? ' recent-appointment' : '');
-
-    li.innerHTML = `
-      ${hasRecent ? '<div class="seal" title="Recently appointed"></div><div class="seal-label">New</div>' : ''}
-      <img src="${fixPhoto(p.photo)}" alt="${p.name}" />
-      <div class="priest-info">
-        <h3>${prefix} ${p.name}</h3>
-        ${p.nickname ? `<p class="nickname">${p.nickname}</p>` : ''}
-        ${ministriesHtml}
-      </div>
-    `;
-
-    listEl.appendChild(li);
-  });
-}
-
-/* Search filter */
-function filterPriests() {
-  const q = normalize(document.getElementById('search-bar').value);
-
-  const filtered = allPriests.filter(p =>
-    normalize(p.name).includes(q) ||
-    normalize(p.nickname).includes(q) ||
-    p.ministries.some(m =>
-      normalize(m.parish).includes(q) ||
-      normalize(m.place).includes(q) ||
-      normalize(m.designation).includes(q) ||
-      normalize(m.forane).includes(q)
-    )
+  entries.sort(
+    (a,b) =>
+      b.date - a.date
   );
 
-  display(filtered);
+  return entries;
+
 }
 
-/* ---------- Priest timeline tab ---------- */
 
-function formatDate(dateStr) {
-  const d = new Date(dateStr);
-  if (isNaN(d)) return '';
-  return d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
+/* =========================================================
+   SPOTLIGHT HTML
+========================================================= */
+
+function spotlightCardHtml(entry){
+
+  return `
+
+    <img
+      src="${fixPhoto(entry.priest.photo)}"
+      alt="${escapeHtml(entry.priest.name)}"
+    >
+
+    <div class="spotlight-card-text">
+
+      <p class="spotlight-card-name">
+        ${escapeHtml(
+          entry.ministry.name_prefix || ''
+        )}
+        ${escapeHtml(entry.priest.name)}
+      </p>
+
+      <p class="spotlight-card-meta">
+        ${escapeHtml(entry.ministry.parish)},
+        ${escapeHtml(entry.ministry.place)}
+      </p>
+
+      <p class="spotlight-card-date">
+        ${entry.date.toLocaleDateString(
+          'en-GB',
+          {
+            day:'numeric',
+            month:'short',
+            year:'numeric'
+          }
+        )}
+      </p>
+
+    </div>
+
+  `;
+
 }
 
-function renderTimeline(priests) {
-  const listEl = document.getElementById('timeline-list');
-  listEl.innerHTML = '';
 
-  const anyHistory = priests.some(p => p.timeline.some(m => !m.is_current));
+/* =========================================================
+   SPOTLIGHT DISPLAY
+========================================================= */
 
-  if (!anyHistory) {
-    listEl.innerHTML = `
-      <div class="timeline-empty-notice">
-        No past-assignment history was found in the current data — only current postings are available,
-        so the timeline below shows each priest's present ministry only.
-        To see full career timelines, add a "previous_ministry" (or similar) array to each priest's
-        record in priests.json with the same shape as current_ministry, plus an end_date.
-      </div>
-    `;
+function showSpotlightCard(index){
+
+  const cardEl =
+    document.getElementById(
+      'spotlight-card'
+    );
+
+  const dotsEl =
+    document.getElementById(
+      'spotlight-dots'
+    );
+
+  spotlightIndex =
+    index;
+
+  cardEl.classList.add(
+    'fade-out'
+  );
+
+  setTimeout(() => {
+
+    if(
+      !spotlightEntries[
+        spotlightIndex
+      ]
+    )
+      return;
+
+    cardEl.innerHTML =
+      spotlightCardHtml(
+        spotlightEntries[
+          spotlightIndex
+        ]
+      );
+
+    cardEl.classList.remove(
+      'fade-out'
+    );
+
+  },350);
+
+
+  [...dotsEl.children]
+    .forEach(
+      (dot,i) =>
+        dot.classList.toggle(
+          'active',
+          i === index
+        )
+    );
+
+}
+
+
+/* =========================================================
+   RENDER SPOTLIGHT
+========================================================= */
+
+function renderSpotlight(priests){
+
+  const wrap =
+    document.getElementById(
+      'spotlight-wrap'
+    );
+
+  const dotsEl =
+    document.getElementById(
+      'spotlight-dots'
+    );
+
+  spotlightEntries =
+    getRecentAppointments(
+      priests
+    );
+
+  if(spotlightTimer){
+
+    clearInterval(
+      spotlightTimer
+    );
+
+    spotlightTimer = null;
+
   }
 
-  priests.forEach(p => {
-    if (p.timeline.length === 0) return;
 
-    const entriesHtml = p.timeline.map(m => `
-      <div class="timeline-entry${m.is_current ? ' is-current' : ''}">
-        <div class="timeline-entry-designation">
-          ${m.designation}
-          ${m.is_current ? '<span class="timeline-current-tag">Present</span>' : ''}
-        </div>
-        <div class="timeline-entry-parish">${m.parish}, ${m.place}</div>
-        <div class="timeline-entry-dates">
-          ${m.join_date ? formatDate(m.join_date) : 'Date unknown'}
-          –
-          ${m.is_current ? 'Present' : (m.end_date ? formatDate(m.end_date) : 'Date unknown')}
-        </div>
-      </div>
-    `).join('');
+  if(
+    spotlightEntries.length === 0
+  ){
 
-    const li = document.createElement('li');
-    li.className = 'timeline-person';
-    li.innerHTML = `
-      <img src="${fixPhoto(p.photo)}" alt="${p.name}" />
-      <div style="flex:1; min-width:0;">
-        <p class="timeline-person-name">${p.name}</p>
-        <div class="timeline-track">${entriesHtml}</div>
+    wrap.style.display =
+      'none';
+
+    return;
+
+  }
+
+
+  dotsEl.innerHTML =
+    spotlightEntries
+      .map(
+        () =>
+          `<div class="spotlight-dot"></div>`
+      )
+      .join('');
+
+
+  document.getElementById(
+    'spotlight-card'
+  ).innerHTML =
+    spotlightCardHtml(
+      spotlightEntries[0]
+    );
+
+
+  [...dotsEl.children][0]
+    ?.classList.add('active');
+
+
+  spotlightIndex = 0;
+
+  wrap.style.display =
+    'block';
+
+
+  if(
+    spotlightEntries.length > 1
+  ){
+
+    spotlightTimer =
+      setInterval(
+        () => {
+
+          showSpotlightCard(
+            (
+              spotlightIndex + 1
+            ) %
+            spotlightEntries.length
+          );
+
+        },
+        3200
+      );
+
+  }
+
+}
+
+
+/* =========================================================
+   ESCAPE HTML
+========================================================= */
+
+function escapeHtml(value){
+
+  return String(value ?? '')
+    .replace(/&/g,'&amp;')
+    .replace(/</g,'&lt;')
+    .replace(/>/g,'&gt;')
+    .replace(/"/g,'&quot;')
+    .replace(/'/g,'&#039;');
+
+}
+
+
+/* =========================================================
+   HOME PARISH
+========================================================= */
+
+function getHomeParish(priest){
+
+  const name =
+    (priest.nativeparish || '').trim();
+
+  const place =
+    (priest.nativeparishplace || '').trim();
+
+  if(name && place){
+
+    return `${name}, ${place}`;
+
+  }
+
+  return name || place || 'Not available';
+
+}
+
+
+/* =========================================================
+   MAP MINISTRY
+========================================================= */
+
+function mapMinistry(
+  m,
+  isCurrent,
+  parishes
+){
+
+  const match =
+    parishes.find(
+      p =>
+        normalize(
+          p.parish_name
+        ) ===
+        normalize(
+          m.parish_name
+        )
+        &&
+        normalize(
+          p.parish_place
+        ) ===
+        normalize(
+          m.parish_place
+        )
+    );
+
+
+  return {
+
+    parish:
+      m.parish_name || '',
+
+    place:
+      m.parish_place || '',
+
+    designation:
+      m.ministry_designation_name || '',
+
+    forane:
+      match
+        ? match.forane_name || ''
+        : '',
+
+    primary:
+      m.is_primary_ministry == 1,
+
+    name_prefix:
+      m.name_prefix || '',
+
+    join_date:
+      m.join_date || '',
+
+    end_date:
+      m.end_date ||
+      m.relieved_date ||
+      m.left_date ||
+      '',
+
+    is_current:
+      isCurrent
+
+  };
+
+}
+
+
+/* =========================================================
+   LOAD DATA
+========================================================= */
+
+async function loadData(){
+
+  try{
+
+    const [
+      priestsRes,
+      parishesRes
+    ] = await Promise.all([
+
+      fetch(jsonUrl),
+
+      fetch(parishUrl)
+
+    ]);
+
+
+    if(!priestsRes.ok)
+      throw new Error(
+        'Unable to load priests.json'
+      );
+
+    if(!parishesRes.ok)
+      throw new Error(
+        'Unable to load parishes.json'
+      );
+
+
+    const priestsJson =
+      await priestsRes.json();
+
+    const parishesJson =
+      await parishesRes.json();
+
+
+    const parishes =
+      parishesJson.data || [];
+
+
+    allPriests =
+      (priestsJson.data || [])
+      .map(priest => {
+
+        const status =
+          normalizeStatus(
+            priest.status
+          );
+
+
+        const ministries =
+          (priest.current_ministry || [])
+          .map(
+            m =>
+              mapMinistry(
+                m,
+                true,
+                parishes
+              )
+          );
+
+
+        const historySource =
+          priest.previous_ministry ||
+          priest.past_ministry ||
+          priest.ministry_history ||
+          [];
+
+
+        const timelineHistory =
+          (historySource || [])
+          .map(
+            m =>
+              mapMinistry(
+                m,
+                false,
+                parishes
+              )
+          );
+
+
+        return {
+
+          name:
+            priest.name || '',
+
+          nickname:
+            priest.nickname || '',
+
+          photo:
+            priest.photo || '',
+
+          status,
+
+          date_of_birth:
+            priest.date_of_birth ||
+            priest.dateofbirth ||
+            '',
+
+          date_of_ordination:
+            priest.date_of_ordination ||
+            priest.dateofordination ||
+            '',
+
+          demisedate:
+            priest.demisedate ||
+            '',
+
+          nativeparish:
+            priest.nativeparish ||
+            '',
+
+          nativeparishplace:
+            priest.nativeparishplace ||
+            '',
+
+          ministries,
+
+          timeline:
+            [
+              ...ministries,
+              ...timelineHistory
+            ]
+            .sort(
+              (a,b) => {
+
+                if(
+                  a.is_current !==
+                  b.is_current
+                ){
+
+                  return a.is_current
+                    ? -1
+                    : 1;
+
+                }
+
+                return (
+                  parseDate(
+                    b.join_date
+                  ) || 0
+                ) -
+                (
+                  parseDate(
+                    a.join_date
+                  ) || 0
+                );
+
+              }
+            )
+
+        };
+
+      });
+
+
+    updateStatusCounts();
+
+    renderSpotlight(
+      allPriests
+    );
+
+    display(
+      getFilteredPriests()
+    );
+
+    renderTimeline(
+      allPriests
+    );
+
+
+    loadingEl.style.display =
+      'none';
+
+
+  }catch(error){
+
+    console.error(error);
+
+    loadingEl.innerHTML = `
+
+      <div style="
+        max-width:600px;
+        margin:40px auto;
+        padding:25px;
+        background:#fffdf9;
+        border:1px solid #e4dac6;
+        border-radius:14px;
+        color:#7a1f2b;
+      ">
+
+        <strong>
+          Unable to load directory
+        </strong>
+
+        <p style="
+          color:#6b6154;
+          line-height:1.6;
+        ">
+          Please make sure
+          <b>priests.json</b> and
+          <b>parishes.json</b>
+          are available in the same folder
+          as this HTML file.
+        </p>
+
       </div>
+
     `;
+
+  }
+
+}
+
+
+/* =========================================================
+   STATUS COUNTS
+========================================================= */
+
+function updateStatusCounts(){
+
+  const counts = {
+
+    Active:0,
+
+    Retired:0,
+
+    Demised:0
+
+  };
+
+
+  allPriests.forEach(
+    priest => {
+
+      const status =
+        normalizeStatus(
+          priest.status
+        );
+
+      if(
+        counts[status] !== undefined
+      ){
+
+        counts[status]++;
+
+      }
+
+    }
+  );
+
+
+  document.getElementById(
+    'status-count-active'
+  ).textContent =
+    `${counts.Active} priest${counts.Active === 1 ? '' : 's'}`;
+
+
+  document.getElementById(
+    'status-count-retired'
+  ).textContent =
+    `${counts.Retired} priest${counts.Retired === 1 ? '' : 's'}`;
+
+
+  document.getElementById(
+    'status-count-demised'
+  ).textContent =
+    `${counts.Demised} priest${counts.Demised === 1 ? '' : 's'}`;
+
+}
+
+
+/* =========================================================
+   GET STATUS FILTERED DATA
+========================================================= */
+
+function getFilteredPriests(){
+
+  const q =
+    normalize(
+      document.getElementById(
+        'search-bar'
+      ).value
+    );
+
+
+  return allPriests.filter(
+    p => {
+
+      if(
+        normalizeStatus(p.status) !==
+        selectedStatus
+      ){
+
+        return false;
+
+      }
+
+
+      if(!q)
+        return true;
+
+
+      const homeParish =
+        getHomeParish(p);
+
+
+      return (
+
+        normalize(p.name)
+          .includes(q)
+
+        ||
+
+        normalize(p.nickname)
+          .includes(q)
+
+        ||
+
+        normalize(homeParish)
+          .includes(q)
+
+        ||
+
+        normalize(p.nativeparish)
+          .includes(q)
+
+        ||
+
+        normalize(p.nativeparishplace)
+          .includes(q)
+
+        ||
+
+        (p.ministries || [])
+          .some(
+            m =>
+
+              normalize(m.parish)
+                .includes(q)
+
+              ||
+
+              normalize(m.place)
+                .includes(q)
+
+              ||
+
+              normalize(m.designation)
+                .includes(q)
+
+              ||
+
+              normalize(m.forane)
+                .includes(q)
+          )
+
+      );
+
+    }
+  );
+
+}
+
+
+/* =========================================================
+   SWITCH STATUS
+========================================================= */
+
+function switchStatus(status){
+
+  selectedStatus =
+    status;
+
+
+  document
+    .querySelectorAll(
+      '.status-btn'
+    )
+    .forEach(btn =>
+      btn.classList.remove(
+        'active'
+      )
+    );
+
+
+  const id =
+    `status-btn-${status.toLowerCase()}`;
+
+
+  document.getElementById(id)
+    ?.classList.add('active');
+
+
+  document.getElementById(
+    'search-bar'
+  ).value = '';
+
+
+  display(
+    getFilteredPriests()
+  );
+
+}
+
+
+/* =========================================================
+   STATUS BADGE
+========================================================= */
+
+function statusBadgeHtml(status){
+
+  const safeStatus =
+    normalizeStatus(status);
+
+  return `
+
+    <span class="status-badge ${safeStatus.toLowerCase()}">
+      ${safeStatus}
+    </span>
+
+  `;
+
+}
+
+
+/* =========================================================
+   DEMISED DETAILS HTML
+========================================================= */
+
+function demisedDetailsHtml(p){
+
+  const birth =
+    formatDate(
+      p.date_of_birth
+    ) ||
+    'Not available';
+
+
+  const ordination =
+    formatDate(
+      p.date_of_ordination
+    ) ||
+    'Not available';
+
+
+  const death =
+    formatDate(
+      p.demisedate
+    ) ||
+    'Not available';
+
+
+  const homeParish =
+    getHomeParish(p);
+
+
+  return `
+
+    <div class="demised-details">
+
+      <div class="detail-row">
+
+        <div class="detail-label">
+          Birth
+        </div>
+
+        <div class="detail-value">
+          ${escapeHtml(birth)}
+        </div>
+
+      </div>
+
+
+      <div class="detail-row">
+
+        <div class="detail-label">
+          Ordination
+        </div>
+
+        <div class="detail-value">
+          ${escapeHtml(ordination)}
+        </div>
+
+      </div>
+
+
+      <div class="detail-row">
+
+        <div class="detail-label">
+          Death
+        </div>
+
+        <div class="detail-value">
+          ${escapeHtml(death)}
+        </div>
+
+      </div>
+
+
+      <div class="detail-row">
+
+        <div class="detail-label">
+          Home Parish
+        </div>
+
+        <div class="detail-value home-parish">
+          ${escapeHtml(homeParish)}
+        </div>
+
+      </div>
+
+    </div>
+
+  `;
+
+}
+
+
+/* =========================================================
+   DISPLAY DIRECTORY
+========================================================= */
+
+function display(priests){
+
+  listEl.innerHTML = '';
+
+  countEl.textContent =
+    `Total: ${priests.length}`;
+
+
+  if(priests.length === 0){
+
+    listEl.innerHTML = `
+
+      <li class="empty-message">
+
+        <div class="empty-icon">
+          ${
+            selectedStatus === 'Demised'
+              ? '✚'
+              : '⌕'
+          }
+        </div>
+
+        <strong>
+          No ${selectedStatus.toLowerCase()} priests found
+        </strong>
+
+        <div>
+          Try another search term.
+        </div>
+
+      </li>
+
+    `;
+
+    return;
+
+  }
+
+
+  priests.forEach(p => {
+
+    const status =
+      normalizeStatus(
+        p.status
+      );
+
+
+    /*
+     * -------------------------------------------------------
+     * DEMISED CARD
+     * -------------------------------------------------------
+     */
+
+    if(status === 'Demised'){
+
+      const li =
+        document.createElement('li');
+
+
+      li.className =
+        'priest-item demised-card';
+
+
+      li.innerHTML = `
+
+        <div
+          class="memorial-emblem"
+          title="In memoriam"
+          aria-label="In memoriam"
+        ></div>
+
+        <div class="memorial-label">
+          In Memoriam
+        </div>
+
+
+        <img
+          src="${fixPhoto(p.photo)}"
+          alt="${escapeHtml(p.name)}"
+        >
+
+
+        <div class="priest-info">
+
+          <h3>
+            ${escapeHtml(p.name)}
+          </h3>
+
+
+          ${
+            p.nickname
+              ? `
+                <p class="nickname">
+                  ${escapeHtml(p.nickname)}
+                </p>
+              `
+              : ''
+          }
+
+
+          ${statusBadgeHtml(status)}
+
+
+          ${demisedDetailsHtml(p)}
+
+        </div>
+
+      `;
+
+
+      listEl.appendChild(li);
+
+      return;
+
+    }
+
+
+    /*
+     * -------------------------------------------------------
+     * ACTIVE / RETIRED CARD
+     * -------------------------------------------------------
+     */
+
+    const hasRecent =
+      status === 'Active' &&
+      p.ministries.some(
+        m =>
+          isRecent(
+            m.join_date
+          )
+      );
+
+
+    const primary =
+      p.ministries.find(
+        m => m.primary
+      );
+
+
+    const prefix =
+      primary?.name_prefix ||
+      p.ministries[0]?.name_prefix ||
+      '';
+
+
+    const ministriesHtml =
+      p.ministries
+        .map(m => `
+
+          <div class="ministry-block">
+
+            <div class="designation">
+              ${escapeHtml(
+                m.designation
+              )}
+            </div>
+
+            <div class="parish">
+              ${escapeHtml(
+                m.parish
+              )},
+              ${escapeHtml(
+                m.place
+              )}
+            </div>
+
+            ${
+              m.forane
+                ? `
+                  <div class="forane">
+                    ${escapeHtml(
+                      m.forane
+                    )}
+                  </div>
+                `
+                : ''
+            }
+
+
+            ${
+              m.join_date
+                ? `
+
+                  <div class="appointment-date">
+
+                    Appointed
+                    ${escapeHtml(
+                      formatDate(
+                        m.join_date
+                      )
+                    )}
+
+                  </div>
+
+                `
+                : ''
+            }
+
+          </div>
+
+        `)
+        .join('');
+
+
+    const li =
+      document.createElement('li');
+
+
+    li.className =
+      'priest-item' +
+      (
+        hasRecent
+          ? ' recent-appointment'
+          : ''
+      );
+
+
+    li.innerHTML = `
+
+      ${
+        hasRecent
+          ? `
+            <div
+              class="seal"
+              title="Recently appointed"
+            ></div>
+
+            <div class="seal-label">
+              New
+            </div>
+          `
+          : ''
+      }
+
+
+      <img
+        src="${fixPhoto(p.photo)}"
+        alt="${escapeHtml(p.name)}"
+      >
+
+
+      <div class="priest-info">
+
+        <h3>
+          ${escapeHtml(prefix)}
+          ${escapeHtml(p.name)}
+        </h3>
+
+
+        ${
+          p.nickname
+            ? `
+              <p class="nickname">
+                ${escapeHtml(p.nickname)}
+              </p>
+            `
+            : ''
+        }
+
+
+        ${statusBadgeHtml(status)}
+
+
+        ${
+          ministriesHtml ||
+          `
+            <div class="ministry-block">
+              <div class="parish">
+                No current ministry information available.
+              </div>
+            </div>
+          `
+        }
+
+      </div>
+
+    `;
+
+
     listEl.appendChild(li);
+
   });
+
 }
 
-function filterTimeline() {
-  const q = normalize(document.getElementById('timeline-search-bar').value);
-  const filtered = allPriests.filter(p => normalize(p.name).includes(q) || normalize(p.nickname).includes(q));
-  renderTimeline(filtered);
+
+/* =========================================================
+   SEARCH
+========================================================= */
+
+function filterPriests(){
+
+  display(
+    getFilteredPriests()
+  );
+
 }
 
-/* ---------- Tabs ---------- */
-function switchTab(tab) {
-  document.getElementById('tab-directory').classList.toggle('active', tab === 'directory');
-  document.getElementById('tab-timeline').classList.toggle('active', tab === 'timeline');
-  document.getElementById('tab-btn-directory').classList.toggle('active', tab === 'directory');
-  document.getElementById('tab-btn-timeline').classList.toggle('active', tab === 'timeline');
+
+/* =========================================================
+   TIMELINE
+========================================================= */
+
+function renderTimeline(priests){
+
+  const timelineList =
+    document.getElementById(
+      'timeline-list'
+    );
+
+  timelineList.innerHTML = '';
+
+
+  const anyHistory =
+    priests.some(
+      p =>
+        p.timeline.some(
+          m => !m.is_current
+        )
+    );
+
+
+  if(!anyHistory){
+
+    const notice =
+      document.createElement('div');
+
+    notice.className =
+      'timeline-empty-notice';
+
+    notice.innerHTML = `
+
+      No past-assignment history was found
+      in the current data — only current
+      postings are available.
+
+      <br><br>
+
+      To see full career timelines,
+      add a
+      <b>previous_ministry</b>,
+      <b>past_ministry</b>, or
+      <b>ministry_history</b>
+      array to each priest's
+      <b>priests.json</b> record.
+
+    `;
+
+    timelineList.appendChild(
+      notice
+    );
+
+  }
+
+
+  priests.forEach(p => {
+
+    if(
+      p.timeline.length === 0
+    )
+      return;
+
+
+    const entriesHtml =
+      p.timeline
+        .map(m => `
+
+          <div
+            class="timeline-entry
+              ${m.is_current ? 'is-current' : ''}"
+          >
+
+            <div
+              class="timeline-entry-designation"
+            >
+
+              ${escapeHtml(
+                m.designation
+              )}
+
+              ${
+                m.is_current
+                  ? `
+                    <span
+                      class="timeline-current-tag"
+                    >
+                      Present
+                    </span>
+                  `
+                  : ''
+              }
+
+            </div>
+
+
+            <div
+              class="timeline-entry-parish"
+            >
+
+              ${escapeHtml(
+                m.parish
+              )},
+              ${escapeHtml(
+                m.place
+              )}
+
+            </div>
+
+
+            <div
+              class="timeline-entry-dates"
+            >
+
+              ${
+                m.join_date
+                  ? escapeHtml(
+                      formatDate(
+                        m.join_date
+                      )
+                    )
+                  : 'Date unknown'
+              }
+
+              –
+
+              ${
+                m.is_current
+                  ? 'Present'
+                  : (
+                      m.end_date
+                        ? escapeHtml(
+                            formatDate(
+                              m.end_date
+                            )
+                          )
+                        : 'Date unknown'
+                    )
+              }
+
+            </div>
+
+          </div>
+
+        `)
+        .join('');
+
+
+    const li =
+      document.createElement('li');
+
+
+    li.className =
+      'timeline-person';
+
+
+    li.innerHTML = `
+
+      <img
+        src="${fixPhoto(p.photo)}"
+        alt="${escapeHtml(p.name)}"
+      >
+
+
+      <div
+        style="
+          flex:1;
+          min-width:0;
+        "
+      >
+
+        <p class="timeline-person-name">
+
+          ${escapeHtml(
+            p.name
+          )}
+
+          ${
+            p.status === 'Demised'
+              ? `
+                <span
+                  class="status-badge demised"
+                  style="
+                    font-family:Inter,sans-serif;
+                    vertical-align:middle;
+                  "
+                >
+                  Demised
+                </span>
+              `
+              : ''
+          }
+
+        </p>
+
+
+        <div class="timeline-track">
+
+          ${entriesHtml}
+
+        </div>
+
+      </div>
+
+    `;
+
+
+    timelineList.appendChild(li);
+
+  });
+
 }
+
+
+/* =========================================================
+   TIMELINE SEARCH
+========================================================= */
+
+function filterTimeline(){
+
+  const q =
+    normalize(
+      document.getElementById(
+        'timeline-search-bar'
+      ).value
+    );
+
+
+  const filtered =
+    allPriests.filter(
+      p =>
+        normalize(p.name)
+          .includes(q)
+
+        ||
+
+        normalize(p.nickname)
+          .includes(q)
+    );
+
+
+  renderTimeline(
+    filtered
+  );
+
+}
+
+
+/* =========================================================
+   MAIN TABS
+========================================================= */
+
+function switchTab(tab){
+
+  document
+    .getElementById(
+      'tab-directory'
+    )
+    .classList.toggle(
+      'active',
+      tab === 'directory'
+    );
+
+
+  document
+    .getElementById(
+      'tab-timeline'
+    )
+    .classList.toggle(
+      'active',
+      tab === 'timeline'
+    );
+
+
+  document
+    .getElementById(
+      'tab-btn-directory'
+    )
+    .classList.toggle(
+      'active',
+      tab === 'directory'
+    );
+
+
+  document
+    .getElementById(
+      'tab-btn-timeline'
+    )
+    .classList.toggle(
+      'active',
+      tab === 'timeline'
+    );
+
+}
+
+
+/* =========================================================
+   START
+========================================================= */
 
 loadData();
 
