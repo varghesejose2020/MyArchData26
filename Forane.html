@@ -10,12 +10,11 @@
 
   <meta
     name="description"
-    content="Live Forane and Parish Directory"
+    content="Forane and Parish Directory"
   >
 
   <title>Forane & Parish Directory</title>
 
-  <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
@@ -25,6 +24,7 @@
   >
 
   <style>
+
     :root {
       --primary: #173f5f;
       --primary-dark: #0d2d45;
@@ -59,6 +59,7 @@
 
     body {
       margin: 0;
+
       background:
         radial-gradient(
           circle at top right,
@@ -68,7 +69,9 @@
         var(--bg);
 
       color: var(--text);
+
       font-family: "DM Sans", sans-serif;
+
       line-height: 1.6;
     }
 
@@ -78,9 +81,7 @@
       font: inherit;
     }
 
-    /* =========================================
-       HEADER
-    ========================================= */
+    /* HEADER */
 
     .top-header {
       position: relative;
@@ -95,21 +96,27 @@
         );
 
       color: white;
+
       padding: 70px 20px 110px;
     }
 
     .top-header::before,
     .top-header::after {
       content: "";
+
       position: absolute;
+
       border-radius: 50%;
+
       background: rgba(255,255,255,0.06);
+
       pointer-events: none;
     }
 
     .top-header::before {
       width: 380px;
       height: 380px;
+
       right: -100px;
       top: -160px;
     }
@@ -117,6 +124,7 @@
     .top-header::after {
       width: 250px;
       height: 250px;
+
       left: -100px;
       bottom: -140px;
     }
@@ -126,18 +134,23 @@
       z-index: 2;
 
       width: min(1180px, 100%);
+
       margin: auto;
+
       text-align: center;
     }
 
     .eyebrow {
       display: inline-flex;
+
       align-items: center;
+
       gap: 8px;
 
       padding: 7px 14px;
 
       border: 1px solid rgba(255,255,255,0.2);
+
       border-radius: 50px;
 
       background: rgba(255,255,255,0.08);
@@ -145,17 +158,22 @@
       color: #dbeafa;
 
       font-size: 12px;
+
       font-weight: 700;
+
       letter-spacing: 1.4px;
+
       text-transform: uppercase;
     }
 
     .eyebrow::before {
       content: "";
+
       width: 7px;
       height: 7px;
 
       border-radius: 50%;
+
       background: #66e09a;
 
       box-shadow:
@@ -168,6 +186,7 @@
       font-family: "Playfair Display", serif;
 
       font-size: clamp(38px, 6vw, 68px);
+
       line-height: 1.05;
 
       letter-spacing: -1.5px;
@@ -175,6 +194,7 @@
 
     .header-inner p {
       max-width: 700px;
+
       margin: 0 auto;
 
       color: #dbe7f1;
@@ -182,21 +202,19 @@
       font-size: 17px;
     }
 
-    /* =========================================
-       MAIN
-    ========================================= */
+    /* MAIN */
 
     .container {
       width: min(1180px, calc(100% - 32px));
+
       margin: -60px auto 80px;
 
       position: relative;
+
       z-index: 5;
     }
 
-    /* =========================================
-       STAT CARDS
-    ========================================= */
+    /* STATISTICS */
 
     .stats-grid {
       display: grid;
@@ -219,6 +237,7 @@
       background: var(--card);
 
       border: 1px solid var(--border);
+
       border-radius: var(--radius);
 
       box-shadow: var(--shadow);
@@ -244,9 +263,11 @@
       color: var(--muted);
 
       font-size: 13px;
+
       font-weight: 700;
 
       letter-spacing: .5px;
+
       text-transform: uppercase;
     }
 
@@ -256,6 +277,7 @@
       color: var(--primary);
 
       font-size: 32px;
+
       font-weight: 800;
 
       line-height: 1.15;
@@ -263,12 +285,11 @@
 
     .stat-card.largest .stat-value {
       font-size: 21px;
+
       line-height: 1.35;
     }
 
-    /* =========================================
-       SECTION CARD
-    ========================================= */
+    /* PANEL */
 
     .panel {
       margin-bottom: 24px;
@@ -276,6 +297,7 @@
       background: var(--card);
 
       border: 1px solid var(--border);
+
       border-radius: var(--radius);
 
       box-shadow: var(--shadow-sm);
@@ -285,8 +307,11 @@
 
     .panel-header {
       display: flex;
+
       justify-content: space-between;
+
       align-items: flex-start;
+
       gap: 20px;
 
       padding: 25px 28px 18px;
@@ -300,6 +325,7 @@
       font-family: "Playfair Display", serif;
 
       font-size: 28px;
+
       line-height: 1.2;
     }
 
@@ -311,13 +337,13 @@
       font-size: 14px;
     }
 
-    /* =========================================
-       API STATUS
-    ========================================= */
+    /* STATUS */
 
     .api-status {
       display: inline-flex;
+
       align-items: center;
+
       gap: 8px;
 
       white-space: nowrap;
@@ -327,9 +353,11 @@
       border-radius: 50px;
 
       background: #eef8f3;
+
       color: var(--success);
 
       font-size: 12px;
+
       font-weight: 700;
     }
 
@@ -340,17 +368,17 @@
       height: 7px;
 
       border-radius: 50%;
+
       background: currentColor;
     }
 
     .api-status.error {
       background: #fff0f0;
+
       color: var(--danger);
     }
 
-    /* =========================================
-       CHART
-    ========================================= */
+    /* CHART */
 
     .chart-wrap {
       padding: 8px 28px 30px;
@@ -373,12 +401,15 @@
       gap: 15px;
 
       margin: 13px 0;
+
+      cursor: pointer;
     }
 
     .chart-label {
       color: #354354;
 
       font-size: 13px;
+
       font-weight: 600;
 
       text-align: right;
@@ -420,12 +451,11 @@
       color: var(--primary);
 
       font-size: 14px;
+
       font-weight: 800;
     }
 
-    /* =========================================
-       CONTROLS
-    ========================================= */
+    /* CONTROLS */
 
     .controls {
       display: grid;
@@ -440,6 +470,7 @@
       padding: 20px 28px;
 
       border-top: 1px solid var(--border);
+
       border-bottom: 1px solid var(--border);
 
       background: #fafbfd;
@@ -471,6 +502,7 @@
       padding: 0 15px;
 
       border: 1px solid #dce2e9;
+
       border-radius: 11px;
 
       background: white;
@@ -503,6 +535,7 @@
       padding: 0 18px;
 
       border: 0;
+
       border-radius: 11px;
 
       cursor: pointer;
@@ -516,11 +549,13 @@
 
     .clear-btn {
       background: #edf1f5;
+
       color: #43505f;
     }
 
     .refresh-btn {
       background: var(--primary);
+
       color: white;
     }
 
@@ -531,7 +566,9 @@
 
     .refresh-area {
       display: flex;
+
       justify-content: space-between;
+
       align-items: center;
 
       gap: 15px;
@@ -543,9 +580,7 @@
       font-size: 12px;
     }
 
-    /* =========================================
-       FORANE LIST
-    ========================================= */
+    /* FORANE */
 
     .forane-list {
       padding: 10px 28px 30px;
@@ -574,13 +609,11 @@
         0 8px 25px rgba(19,43,66,.07);
     }
 
-    .forane-card.hidden {
-      display: none;
-    }
-
     .forane-summary {
       display: flex;
+
       align-items: center;
+
       justify-content: space-between;
 
       gap: 20px;
@@ -598,6 +631,7 @@
 
     .forane-summary-left {
       display: flex;
+
       align-items: center;
 
       gap: 14px;
@@ -607,11 +641,13 @@
 
     .forane-number {
       display: grid;
+
       place-items: center;
 
       flex: 0 0 42px;
 
       width: 42px;
+
       height: 42px;
 
       border-radius: 12px;
@@ -626,6 +662,7 @@
       color: var(--secondary);
 
       font-size: 13px;
+
       font-weight: 800;
     }
 
@@ -635,6 +672,7 @@
       color: var(--primary);
 
       font-size: 17px;
+
       font-weight: 800;
     }
 
@@ -658,6 +696,7 @@
       color: var(--secondary);
 
       font-size: 12px;
+
       font-weight: 800;
     }
 
@@ -696,6 +735,7 @@
 
     .parish-item {
       display: flex;
+
       align-items: flex-start;
 
       gap: 12px;
@@ -703,6 +743,7 @@
       padding: 13px;
 
       border: 1px solid #e8edf2;
+
       border-radius: 11px;
 
       background: white;
@@ -710,6 +751,7 @@
 
     .parish-id {
       display: grid;
+
       place-items: center;
 
       flex: 0 0 38px;
@@ -725,6 +767,7 @@
       color: #657384;
 
       font-size: 11px;
+
       font-weight: 800;
     }
 
@@ -738,6 +781,7 @@
       color: #263545;
 
       font-size: 14px;
+
       font-weight: 700;
 
       line-height: 1.4;
@@ -763,9 +807,7 @@
       font-size: 10px;
     }
 
-    /* =========================================
-       EMPTY STATE
-    ========================================= */
+    /* EMPTY */
 
     .empty-state {
       padding: 55px 20px;
@@ -777,9 +819,11 @@
 
     .empty-icon {
       display: grid;
+
       place-items: center;
 
       width: 60px;
+
       height: 60px;
 
       margin: 0 auto 15px;
@@ -807,15 +851,15 @@
       font-size: 13px;
     }
 
-    /* =========================================
-       LOADING
-    ========================================= */
+    /* LOADING */
 
     .loading {
       display: flex;
+
       flex-direction: column;
 
       align-items: center;
+
       justify-content: center;
 
       min-height: 280px;
@@ -825,11 +869,13 @@
 
     .spinner {
       width: 42px;
+
       height: 42px;
 
       margin-bottom: 15px;
 
       border: 4px solid #e3eaf0;
+
       border-top-color: var(--secondary);
 
       border-radius: 50%;
@@ -844,9 +890,7 @@
       }
     }
 
-    /* =========================================
-       ERROR
-    ========================================= */
+    /* ERROR */
 
     .error-box {
       margin: 25px;
@@ -876,9 +920,7 @@
       font-size: 13px;
     }
 
-    /* =========================================
-       FOOTER
-    ========================================= */
+    /* FOOTER */
 
     footer {
       padding: 35px 20px 50px;
@@ -894,9 +936,7 @@
       color: var(--primary);
     }
 
-    /* =========================================
-       RESPONSIVE
-    ========================================= */
+    /* RESPONSIVE */
 
     @media (max-width: 900px) {
 
@@ -997,6 +1037,7 @@
         flex-basis: 36px;
 
         width: 36px;
+
         height: 36px;
       }
 
@@ -1026,1184 +1067,1477 @@
         font-size: 38px;
       }
     }
+
   </style>
 </head>
 
 <body>
 
-  <!-- =========================================
-       HERO
-  ========================================= -->
+<header class="top-header">
 
-  <header class="top-header">
+  <div class="header-inner">
 
-    <div class="header-inner">
+    <span class="eyebrow">
+      Live Parish Directory
+    </span>
 
-      <span class="eyebrow">
-        Live Parish Directory
+    <h1>
+      Forane & Parish Directory
+    </h1>
+
+    <p>
+      Explore Foranes and their parishes using
+      parish data from the directory.
+    </p>
+
+  </div>
+
+</header>
+
+
+<main class="container">
+
+  <!-- STATISTICS -->
+
+  <section class="stats-grid">
+
+    <div class="stat-card">
+
+      <div class="stat-label">
+        Total Foranes
+      </div>
+
+      <div
+        class="stat-value"
+        id="totalForanes">
+        —
+      </div>
+
+    </div>
+
+
+    <div class="stat-card">
+
+      <div class="stat-label">
+        Total Parishes
+      </div>
+
+      <div
+        class="stat-value"
+        id="totalParishes">
+        —
+      </div>
+
+    </div>
+
+
+    <div class="stat-card largest">
+
+      <div class="stat-label">
+        Largest Forane
+      </div>
+
+      <div
+        class="stat-value"
+        id="largestForane">
+        —
+      </div>
+
+    </div>
+
+
+    <div class="stat-card">
+
+      <div class="stat-label">
+        Average / Forane
+      </div>
+
+      <div
+        class="stat-value"
+        id="averageParishes">
+        —
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- CHART -->
+
+  <section class="panel">
+
+    <div class="panel-header">
+
+      <div>
+
+        <h2 class="panel-title">
+          Parish Distribution by Forane
+        </h2>
+
+        <p class="panel-description">
+          Number of parishes in each Forane.
+        </p>
+
+      </div>
+
+      <span
+        class="api-status"
+        id="apiStatus">
+        Connecting...
       </span>
 
-      <h1>
-        Forane & Parish Directory
-      </h1>
+    </div>
+
+
+    <div
+      class="chart-wrap"
+      id="chartContainer">
+
+      <div class="loading">
+
+        <div class="spinner"></div>
+
+        <div>
+          Loading parish data...
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- DIRECTORY -->
+
+  <section class="panel">
+
+    <div class="panel-header">
+
+      <div>
+
+        <h2 class="panel-title">
+          Parish Directory
+        </h2>
+
+        <p class="panel-description">
+          Search and browse parishes by Forane,
+          parish name or location.
+        </p>
+
+      </div>
+
+    </div>
+
+
+    <!-- CONTROLS -->
+
+    <div class="controls">
+
+      <div class="input-wrap">
+
+        <span class="input-icon">
+          🔎
+        </span>
+
+        <input
+          type="search"
+          id="searchInput"
+          class="search-input"
+          placeholder="Search parish, place or Forane..."
+          autocomplete="off"
+        >
+
+      </div>
+
+
+      <select
+        id="foraneFilter"
+        class="filter-select"
+        aria-label="Filter by Forane">
+
+        <option value="">
+          All Foranes
+        </option>
+
+      </select>
+
+
+      <button
+        type="button"
+        class="clear-btn"
+        id="clearBtn">
+
+        Clear Filters
+
+      </button>
+
+    </div>
+
+
+    <!-- REFRESH -->
+
+    <div class="refresh-area">
+
+      <span id="resultInfo">
+        Loading records...
+      </span>
+
+      <button
+        type="button"
+        class="refresh-btn"
+        id="refreshBtn">
+
+        ↻ Refresh Data
+
+      </button>
+
+    </div>
+
+
+    <!-- LIST -->
+
+    <div
+      class="forane-list"
+      id="foraneList">
+
+      <div class="loading">
+
+        <div class="spinner"></div>
+
+        <div>
+          Loading Foranes...
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+</main>
+
+
+<footer>
+
+  <strong>
+    Forane & Parish Directory
+  </strong>
+
+  <br>
+
+  Parish data loaded from
+  <strong>parishes.json</strong>.
+
+</footer>
+
+
+<script>
+
+/* =========================================================
+   DATA FILE
+========================================================= */
+
+const API_URL = 'parishes.json';
+
+
+/* =========================================================
+   STATE
+========================================================= */
+
+let foraneData = [];
+
+let currentSearch = "";
+
+let currentFilter = "";
+
+
+/* =========================================================
+   DOM
+========================================================= */
+
+const totalForanes =
+  document.getElementById("totalForanes");
+
+const totalParishes =
+  document.getElementById("totalParishes");
+
+const largestForane =
+  document.getElementById("largestForane");
+
+const averageParishes =
+  document.getElementById("averageParishes");
+
+const chartContainer =
+  document.getElementById("chartContainer");
+
+const foraneList =
+  document.getElementById("foraneList");
+
+const searchInput =
+  document.getElementById("searchInput");
+
+const foraneFilter =
+  document.getElementById("foraneFilter");
+
+const clearBtn =
+  document.getElementById("clearBtn");
+
+const refreshBtn =
+  document.getElementById("refreshBtn");
+
+const resultInfo =
+  document.getElementById("resultInfo");
+
+const apiStatus =
+  document.getElementById("apiStatus");
+
+
+/* =========================================================
+   LOAD DATA
+========================================================= */
+
+async function loadData() {
+
+  setLoadingState();
+
+  try {
+
+    const response =
+      await fetch(API_URL, {
+        method: "GET",
+        cache: "no-store"
+      });
+
+
+    if (!response.ok) {
+
+      throw new Error(
+        `Unable to load parishes.json (HTTP ${response.status})`
+      );
+
+    }
+
+
+    const json =
+      await response.json();
+
+
+    /*
+     * IMPORTANT:
+     *
+     * Your working Priests Directory uses:
+     *
+     * {
+     *   "data": [...]
+     * }
+     *
+     * So accept BOTH:
+     *
+     * [...]
+     *
+     * and:
+     *
+     * {
+     *   "data": [...]
+     * }
+     */
+
+    const parishRecords =
+      Array.isArray(json)
+        ? json
+        : Array.isArray(json.data)
+          ? json.data
+          : [];
+
+
+    if (!parishRecords.length) {
+
+      throw new Error(
+        "parishes.json was loaded, but no parish records were found."
+      );
+
+    }
+
+
+    /*
+     * Convert the flat parish records
+     * into Forane groups.
+     */
+
+    foraneData =
+      buildForaneData(
+        parishRecords
+      );
+
+
+    if (!foraneData.length) {
+
+      throw new Error(
+        "Parish records were found, but no Forane information could be created."
+      );
+
+    }
+
+
+    console.log(
+      "Loaded parish records:",
+      parishRecords.length
+    );
+
+    console.log(
+      "Grouped Foranes:",
+      foraneData
+    );
+
+
+    apiStatus.textContent =
+      "Data connected";
+
+    apiStatus.classList.remove("error");
+
+
+    populateFilter();
+
+    renderStatistics();
+
+    renderChart();
+
+    renderForanes();
+
+
+  } catch (error) {
+
+    console.error(
+      "Data loading error:",
+      error
+    );
+
+    showError(error);
+
+  }
+
+}
+
+
+/* =========================================================
+   BUILD FORANE DATA
+========================================================= */
+
+function buildForaneData(parishes) {
+
+  const groups = new Map();
+
+
+  parishes.forEach(parish => {
+
+    /*
+     * Support the field names used
+     * by your existing parishes.json.
+     */
+
+    const foraneName =
+      cleanText(
+        parish.forane_name ||
+        parish.foranename ||
+        parish.forane ||
+        parish.foraneName
+      );
+
+
+    /*
+     * Skip records that have no Forane.
+     */
+
+    if (!foraneName) {
+
+      return;
+
+    }
+
+
+    /*
+     * Use actual forane_id when available.
+     *
+     * If it doesn't exist, create a
+     * stable ID from the Forane name.
+     */
+
+    const rawForaneId =
+      parish.forane_id ||
+      parish.foraneid ||
+      parish.foraneId;
+
+
+    const foraneId =
+      cleanText(
+        rawForaneId ||
+        createSlug(foraneName)
+      );
+
+
+    const key =
+      String(foraneId);
+
+
+    if (!groups.has(key)) {
+
+      groups.set(
+        key,
+        {
+          forane_id: foraneId,
+
+          forane_name: foraneName,
+
+          parishes: []
+        }
+      );
+
+    }
+
+
+    groups
+      .get(key)
+      .parishes
+      .push({
+
+        parish_id:
+          parish.parish_id ||
+          parish.id ||
+          "",
+
+        parish_name:
+          parish.parish_name ||
+          parish.name ||
+          "",
+
+        parish_place:
+          parish.parish_place ||
+          parish.place ||
+          "",
+
+        arch_parish_id:
+          parish.arch_parish_id ||
+          parish.archparish_id ||
+          ""
+
+      });
+
+  });
+
+
+  return Array.from(
+    groups.values()
+  );
+
+}
+
+
+/* =========================================================
+   CREATE SLUG
+========================================================= */
+
+function createSlug(value) {
+
+  return String(value || "")
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "");
+
+}
+
+
+/* =========================================================
+   LOADING STATE
+========================================================= */
+
+function setLoadingState() {
+
+  chartContainer.innerHTML = `
+
+    <div class="loading">
+
+      <div class="spinner"></div>
+
+      <div>
+        Loading parish data...
+      </div>
+
+    </div>
+
+  `;
+
+
+  foraneList.innerHTML = `
+
+    <div class="loading">
+
+      <div class="spinner"></div>
+
+      <div>
+        Loading Foranes...
+      </div>
+
+    </div>
+
+  `;
+
+
+  apiStatus.textContent =
+    "Connecting...";
+
+  apiStatus.classList.remove(
+    "error"
+  );
+
+}
+
+
+/* =========================================================
+   ERROR
+========================================================= */
+
+function showError(error) {
+
+  apiStatus.textContent =
+    "Data unavailable";
+
+  apiStatus.classList.add(
+    "error"
+  );
+
+
+  chartContainer.innerHTML = `
+
+    <div class="error-box">
+
+      <strong>
+        Unable to load parish data
+      </strong>
 
       <p>
-        Explore Foranes and their parishes using
-        live data from the MyParish API.
+        ${escapeHTML(error.message)}
       </p>
 
     </div>
 
-  </header>
+  `;
 
 
-  <main class="container">
+  foraneList.innerHTML = `
 
-    <!-- =========================================
-         STATISTICS
-    ========================================= -->
+    <div class="error-box">
 
-    <section class="stats-grid">
+      <strong>
+        Parish directory could not be loaded.
+      </strong>
 
-      <div class="stat-card">
+      <p>
+        Make sure <strong>parishes.json</strong>
+        is in the same folder as this HTML file.
+      </p>
 
-        <div class="stat-label">
-          Total Foranes
-        </div>
+    </div>
 
-        <div
-          class="stat-value"
-          id="totalForanes"
-        >
-          —
-        </div>
-
-      </div>
+  `;
 
 
-      <div class="stat-card">
+  resultInfo.textContent =
+    "No records loaded.";
 
-        <div class="stat-label">
-          Total Parishes
-        </div>
-
-        <div
-          class="stat-value"
-          id="totalParishes"
-        >
-          —
-        </div>
-
-      </div>
+}
 
 
-      <div class="stat-card largest">
+/* =========================================================
+   STATISTICS
+========================================================= */
 
-        <div class="stat-label">
-          Largest Forane
-        </div>
+function renderStatistics() {
 
-        <div
-          class="stat-value"
-          id="largestForane"
-        >
-          —
-        </div>
-
-      </div>
-
-
-      <div class="stat-card">
-
-        <div class="stat-label">
-          Average / Forane
-        </div>
-
-        <div
-          class="stat-value"
-          id="averageParishes"
-        >
-          —
-        </div>
-
-      </div>
-
-    </section>
+  const total =
+    foraneData.reduce(
+      (sum, forane) =>
+        sum +
+        getParishes(forane).length,
+      0
+    );
 
 
-    <!-- =========================================
-         CHART
-    ========================================= -->
-
-    <section class="panel">
-
-      <div class="panel-header">
-
-        <div>
-
-          <h2 class="panel-title">
-            Parish Distribution by Forane
-          </h2>
-
-          <p class="panel-description">
-            Number of parishes currently returned
-            by the live API for each Forane.
-          </p>
-
-        </div>
-
-        <span
-          class="api-status"
-          id="apiStatus"
-        >
-          Live API
-        </span>
-
-      </div>
+  const largest =
+    [...foraneData].sort(
+      (a, b) =>
+        getParishes(b).length -
+        getParishes(a).length
+    )[0];
 
 
-      <div
-        class="chart-wrap"
-        id="chartContainer"
-      >
-
-        <div class="loading">
-
-          <div class="spinner"></div>
-
-          <div>
-            Loading live data...
-          </div>
-
-        </div>
-
-      </div>
-
-    </section>
+  const average =
+    foraneData.length
+      ? total / foraneData.length
+      : 0;
 
 
-    <!-- =========================================
-         DIRECTORY
-    ========================================= -->
-
-    <section class="panel">
-
-      <div class="panel-header">
-
-        <div>
-
-          <h2 class="panel-title">
-            Parish Directory
-          </h2>
-
-          <p class="panel-description">
-            Search and browse parishes by Forane,
-            parish name or location.
-          </p>
-
-        </div>
-
-      </div>
+  totalForanes.textContent =
+    foraneData.length;
 
 
-      <!-- CONTROLS -->
+  totalParishes.textContent =
+    total;
 
-      <div class="controls">
 
-        <div class="input-wrap">
+  largestForane.textContent =
+    largest
+      ? cleanText(
+          largest.forane_name
+        )
+      : "—";
 
-          <span class="input-icon">
-            🔎
-          </span>
 
-          <input
-            type="search"
-            id="searchInput"
-            class="search-input"
-            placeholder="Search parish, place or Forane..."
-            autocomplete="off"
+  averageParishes.textContent =
+    average.toFixed(1);
+
+}
+
+
+/* =========================================================
+   FILTER DROPDOWN
+========================================================= */
+
+function populateFilter() {
+
+  const sorted =
+    [...foraneData].sort(
+      (a, b) =>
+        cleanText(
+          a.forane_name
+        ).localeCompare(
+          cleanText(
+            b.forane_name
+          )
+        )
+    );
+
+
+  foraneFilter.innerHTML = `
+
+    <option value="">
+      All Foranes
+    </option>
+
+  `;
+
+
+  sorted.forEach(forane => {
+
+    const option =
+      document.createElement(
+        "option"
+      );
+
+
+    option.value =
+      forane.forane_id;
+
+
+    option.textContent =
+      cleanText(
+        forane.forane_name
+      );
+
+
+    foraneFilter.appendChild(
+      option
+    );
+
+  });
+
+}
+
+
+/* =========================================================
+   CHART
+========================================================= */
+
+function renderChart() {
+
+  if (!foraneData.length) {
+
+    chartContainer.innerHTML =
+      emptyStateHTML(
+        "No Forane data",
+        "No Forane records were found."
+      );
+
+    return;
+
+  }
+
+
+  const sorted =
+    [...foraneData].sort(
+      (a, b) =>
+        getParishes(b).length -
+        getParishes(a).length
+    );
+
+
+  const max =
+    Math.max(
+      ...sorted.map(
+        item =>
+          getParishes(item).length
+      )
+    );
+
+
+  chartContainer.innerHTML = `
+
+    <div class="chart">
+
+      ${sorted.map(forane => {
+
+        const count =
+          getParishes(
+            forane
+          ).length;
+
+
+        const width =
+          max
+            ? (count / max) * 100
+            : 0;
+
+
+        return `
+
+          <div
+            class="chart-row"
+            title="Click to filter ${escapeHTML(
+              cleanText(
+                forane.forane_name
+              )
+            )}"
+            data-forane-id="${escapeHTML(
+              forane.forane_id
+            )}"
           >
 
-        </div>
+            <div class="chart-label">
 
+              ${escapeHTML(
+                cleanText(
+                  forane.forane_name
+                )
+              )}
 
-        <select
-          id="foraneFilter"
-          class="filter-select"
-          aria-label="Filter by Forane"
-        >
+            </div>
 
-          <option value="">
-            All Foranes
-          </option>
 
-        </select>
-
-
-        <button
-          type="button"
-          class="clear-btn"
-          id="clearBtn"
-        >
-          Clear Filters
-        </button>
-
-      </div>
-
-
-      <!-- REFRESH -->
-
-      <div class="refresh-area">
-
-        <span id="resultInfo">
-          Loading records...
-        </span>
-
-        <button
-          type="button"
-          class="refresh-btn"
-          id="refreshBtn"
-        >
-          ↻ Refresh Data
-        </button>
-
-      </div>
-
-
-      <!-- LIST -->
-
-      <div
-        class="forane-list"
-        id="foraneList"
-      >
-
-        <div class="loading">
-
-          <div class="spinner"></div>
-
-          <div>
-            Loading Foranes...
-          </div>
-
-        </div>
-
-      </div>
-
-    </section>
-
-  </main>
-
-
-  <footer>
-
-    <strong>Forane & Parish Directory</strong>
-    <br>
-
-    Data loaded dynamically from the
-    MyParish API.
-
-  </footer>
-
-
-  <script>
-
-    /* =========================================
-       API
-    ========================================= */
-
-    const API_URL =
-      'parishes.json';
-
-
-    /* =========================================
-       STATE
-    ========================================= */
-
-    let foraneData = [];
-
-    let currentSearch = "";
-
-    let currentFilter = "";
-
-
-    /* =========================================
-       DOM
-    ========================================= */
-
-    const totalForanes =
-      document.getElementById("totalForanes");
-
-    const totalParishes =
-      document.getElementById("totalParishes");
-
-    const largestForane =
-      document.getElementById("largestForane");
-
-    const averageParishes =
-      document.getElementById("averageParishes");
-
-    const chartContainer =
-      document.getElementById("chartContainer");
-
-    const foraneList =
-      document.getElementById("foraneList");
-
-    const searchInput =
-      document.getElementById("searchInput");
-
-    const foraneFilter =
-      document.getElementById("foraneFilter");
-
-    const clearBtn =
-      document.getElementById("clearBtn");
-
-    const refreshBtn =
-      document.getElementById("refreshBtn");
-
-    const resultInfo =
-      document.getElementById("resultInfo");
-
-    const apiStatus =
-      document.getElementById("apiStatus");
-
-
-    /* =========================================
-       LOAD DATA
-    ========================================= */
-
-    async function loadData() {
-
-      setLoadingState();
-
-      try {
-
-        const response =
-          await fetch(API_URL, {
-            method: "GET",
-            cache: "no-store"
-          });
-
-
-        if (!response.ok) {
-
-          throw new Error(
-            `HTTP ${response.status}`
-          );
-
-        }
-
-
-        const data =
-          await response.json();
-
-
-        if (!Array.isArray(data)) {
-
-          throw new Error(
-            "Unexpected API response format."
-          );
-
-        }
-
-
-        foraneData = data;
-
-
-        apiStatus.textContent =
-          "Live API connected";
-
-        apiStatus.classList.remove("error");
-
-
-        populateFilter();
-
-        renderStatistics();
-
-        renderChart();
-
-        renderForanes();
-
-
-      } catch (error) {
-
-        console.error(
-          "API loading error:",
-          error
-        );
-
-        showError(error);
-
-      }
-
-    }
-
-
-    /* =========================================
-       LOADING STATE
-    ========================================= */
-
-    function setLoadingState() {
-
-      chartContainer.innerHTML = `
-        <div class="loading">
-          <div class="spinner"></div>
-          <div>Loading live data...</div>
-        </div>
-      `;
-
-
-      foraneList.innerHTML = `
-        <div class="loading">
-          <div class="spinner"></div>
-          <div>Loading Foranes...</div>
-        </div>
-      `;
-
-
-      apiStatus.textContent =
-        "Connecting...";
-
-    }
-
-
-    /* =========================================
-       ERROR
-    ========================================= */
-
-    function showError(error) {
-
-      apiStatus.textContent =
-        "API unavailable";
-
-      apiStatus.classList.add("error");
-
-
-      chartContainer.innerHTML = `
-        <div class="error-box">
-
-          <strong>
-            Unable to load live data
-          </strong>
-
-          <p>
-            ${escapeHTML(error.message)}
-          </p>
-
-        </div>
-      `;
-
-
-      foraneList.innerHTML = `
-        <div class="error-box">
-
-          <strong>
-            Parish directory could not be loaded.
-          </strong>
-
-          <p>
-            Please check the API connection and
-            try the refresh button.
-          </p>
-
-        </div>
-      `;
-
-
-      resultInfo.textContent =
-        "No records loaded.";
-
-    }
-
-
-    /* =========================================
-       STATISTICS
-    ========================================= */
-
-    function renderStatistics() {
-
-      const total =
-        foraneData.reduce(
-          (sum, forane) =>
-            sum + getParishes(forane).length,
-          0
-        );
-
-
-      const largest =
-        [...foraneData].sort(
-          (a, b) =>
-            getParishes(b).length -
-            getParishes(a).length
-        )[0];
-
-
-      const average =
-        foraneData.length
-          ? total / foraneData.length
-          : 0;
-
-
-      totalForanes.textContent =
-        foraneData.length;
-
-
-      totalParishes.textContent =
-        total;
-
-
-      largestForane.textContent =
-        largest
-          ? cleanText(largest.forane_name)
-          : "—";
-
-
-      averageParishes.textContent =
-        average.toFixed(1);
-
-    }
-
-
-    /* =========================================
-       FILTER DROPDOWN
-    ========================================= */
-
-    function populateFilter() {
-
-      const sorted =
-        [...foraneData].sort(
-          (a, b) =>
-            cleanText(a.forane_name)
-              .localeCompare(
-                cleanText(b.forane_name)
-              )
-        );
-
-
-      foraneFilter.innerHTML = `
-        <option value="">
-          All Foranes
-        </option>
-      `;
-
-
-      sorted.forEach(forane => {
-
-        const option =
-          document.createElement("option");
-
-
-        option.value =
-          forane.forane_id;
-
-
-        option.textContent =
-          cleanText(forane.forane_name);
-
-
-        foraneFilter.appendChild(option);
-
-      });
-
-    }
-
-
-    /* =========================================
-       CHART
-    ========================================= */
-
-    function renderChart() {
-
-      if (!foraneData.length) {
-
-        chartContainer.innerHTML =
-          emptyStateHTML(
-            "No Forane data",
-            "The API returned no Forane records."
-          );
-
-        return;
-      }
-
-
-      const sorted =
-        [...foraneData].sort(
-          (a, b) =>
-            getParishes(b).length -
-            getParishes(a).length
-        );
-
-
-      const max =
-        Math.max(
-          ...sorted.map(
-            item =>
-              getParishes(item).length
-          )
-        );
-
-
-      chartContainer.innerHTML = `
-
-        <div class="chart">
-
-          ${sorted.map((forane, index) => {
-
-            const count =
-              getParishes(forane).length;
-
-
-            const width =
-              max
-                ? (count / max) * 100
-                : 0;
-
-
-            return `
+            <div class="chart-track">
 
               <div
-                class="chart-row"
-                title="Click to filter ${escapeHTML(
-                  cleanText(forane.forane_name)
-                )}"
-                data-forane-id="${escapeHTML(
-                  forane.forane_id
-                )}"
-              >
-
-                <div class="chart-label">
-                  ${escapeHTML(
-                    cleanText(forane.forane_name)
-                  )}
-                </div>
-
-
-                <div class="chart-track">
-
-                  <div
-                    class="chart-bar"
-                    style="width:${width}%"
-                  ></div>
-
-                </div>
-
-
-                <div class="chart-value">
-                  ${count}
-                </div>
-
+                class="chart-bar"
+                style="width:${width}%">
               </div>
 
-            `;
-
-          }).join("")}
-
-        </div>
-      `;
+            </div>
 
 
-      chartContainer
-        .querySelectorAll(".chart-row")
-        .forEach(row => {
+            <div class="chart-value">
 
-          row.addEventListener(
-            "click",
-            () => {
+              ${count}
 
-              const id =
-                row.dataset.foraneId;
+            </div>
 
-              foraneFilter.value = id;
+          </div>
 
-              currentFilter = id;
+        `;
 
-              renderForanes();
+      }).join("")}
 
-              document
-                .getElementById(
-                  `forane-${id}`
-                )
-                ?.scrollIntoView({
-                  behavior: "smooth",
-                  block: "center"
-                });
+    </div>
 
-            }
-          );
-
-        });
-
-    }
+  `;
 
 
-    /* =========================================
-       FORANE LIST
-    ========================================= */
+  chartContainer
+    .querySelectorAll(
+      ".chart-row"
+    )
+    .forEach(row => {
 
-    function renderForanes() {
+      row.addEventListener(
+        "click",
+        () => {
 
-      const search =
-        currentSearch
-          .trim()
-          .toLowerCase();
-
-
-      const filter =
-        currentFilter;
+          const id =
+            row.dataset.foraneId;
 
 
-      let visibleForanes = [];
+          foraneFilter.value =
+            id;
 
 
-      foraneData.forEach(forane => {
-
-        const parishes =
-          getParishes(forane);
+          currentFilter =
+            id;
 
 
-        const foraneName =
-          cleanText(
-            forane.forane_name
-          );
+          renderForanes();
 
 
-        const matchingParishes =
-          parishes.filter(parish => {
-
-            const searchable = [
-
-              parish.parish_name,
-
-              parish.parish_place,
-
-              parish.parish_id,
-
-              parish.arch_parish_id,
-
-              foraneName
-
-            ]
-              .map(cleanText)
-              .join(" ")
-              .toLowerCase();
-
-
-            return !search ||
-              searchable.includes(search);
-
-          });
-
-
-        const filterMatch =
-          !filter ||
-          String(forane.forane_id) ===
-          String(filter);
-
-
-        if (
-          filterMatch &&
-          matchingParishes.length
-        ) {
-
-          visibleForanes.push({
-
-            forane,
-
-            parishes:
-              matchingParishes
-
-          });
+          document
+            .getElementById(
+              `forane-${CSS.escape(id)}`
+            )
+            ?.scrollIntoView({
+              behavior: "smooth",
+              block: "center"
+            });
 
         }
+      );
+
+    });
+
+}
+
+
+/* =========================================================
+   FORANE LIST
+========================================================= */
+
+function renderForanes() {
+
+  const search =
+    currentSearch
+      .trim()
+      .toLowerCase();
+
+
+  const filter =
+    currentFilter;
+
+
+  const visibleForanes = [];
+
+
+  foraneData.forEach(forane => {
+
+    const parishes =
+      getParishes(forane);
+
+
+    const foraneName =
+      cleanText(
+        forane.forane_name
+      );
+
+
+    const matchingParishes =
+      parishes.filter(
+        parish => {
+
+          const searchable = [
+
+            parish.parish_name,
+
+            parish.parish_place,
+
+            parish.parish_id,
+
+            parish.arch_parish_id,
+
+            foraneName
+
+          ]
+
+            .map(cleanText)
+
+            .join(" ")
+
+            .toLowerCase();
+
+
+          return !search ||
+            searchable.includes(
+              search
+            );
+
+        }
+      );
+
+
+    const filterMatch =
+      !filter ||
+      String(
+        forane.forane_id
+      ) ===
+      String(filter);
+
+
+    if (
+      filterMatch &&
+      matchingParishes.length
+    ) {
+
+      visibleForanes.push({
+
+        forane,
+
+        parishes:
+          matchingParishes
 
       });
 
+    }
 
-      const totalVisible =
-        visibleForanes.reduce(
-          (sum, item) =>
-            sum + item.parishes.length,
-          0
-        );
+  });
 
 
-      resultInfo.textContent =
-        `${totalVisible} parish ${
-          totalVisible === 1 ? "" : "records"
-        } found across ${
-          visibleForanes.length
-        } Forane${
-          visibleForanes.length === 1
-            ? ""
-            : "s"
-        }.`;
+  const totalVisible =
+    visibleForanes.reduce(
+      (sum, item) =>
+        sum +
+        item.parishes.length,
+      0
+    );
 
 
-      if (!visibleForanes.length) {
+  resultInfo.textContent =
+    `${totalVisible} parish${
+      totalVisible === 1
+        ? ""
+        : "es"
+    } found across ${
+      visibleForanes.length
+    } Forane${
+      visibleForanes.length === 1
+        ? ""
+        : "s"
+    }.`;
 
-        foraneList.innerHTML =
-          emptyStateHTML(
-            "No matching parishes",
-            "Try another search term or clear the filters."
-          );
-
-        return;
-
-      }
 
 
-      foraneList.innerHTML =
-        visibleForanes
-          .map(
-            ({ forane, parishes }) =>
-              foraneCardHTML(
-                forane,
-                parishes
-              )
+  if (!visibleForanes.length) {
+
+    foraneList.innerHTML =
+      emptyStateHTML(
+        "No matching parishes",
+        "Try another search term or clear the filters."
+      );
+
+    return;
+
+  }
+
+
+  foraneList.innerHTML =
+    visibleForanes
+      .map(
+        ({
+          forane,
+          parishes
+        }) =>
+          foraneCardHTML(
+            forane,
+            parishes
           )
-          .join("");
+      )
+      .join("");
 
-    }
-
-
-    /* =========================================
-       FORANE CARD
-    ========================================= */
-
-    function foraneCardHTML(
-      forane,
-      parishes
-    ) {
-
-      const id =
-        cleanText(
-          forane.forane_id
-        );
+}
 
 
-      const name =
-        cleanText(
-          forane.forane_name
-        );
+/* =========================================================
+   FORANE CARD
+========================================================= */
+
+function foraneCardHTML(
+  forane,
+  parishes
+) {
+
+  const id =
+    cleanText(
+      forane.forane_id
+    );
 
 
-      const originalCount =
-        getParishes(forane).length;
+  const name =
+    cleanText(
+      forane.forane_name
+    );
 
 
-      return `
-
-        <details
-          class="forane-card"
-          id="forane-${escapeHTML(id)}"
-        >
-
-          <summary
-            class="forane-summary"
-          >
-
-            <div class="forane-summary-left">
-
-              <div class="forane-number">
-                ${escapeHTML(id)}
-              </div>
+  const originalCount =
+    getParishes(
+      forane
+    ).length;
 
 
-              <div>
+  return `
 
-                <h3 class="forane-name">
-                  ${escapeHTML(name)}
-                </h3>
+    <details
+      class="forane-card"
+      id="forane-${escapeHTML(id)}"
+    >
 
-                <div class="forane-meta">
-                  ${parishes.length}
-                  shown of
-                  ${originalCount}
-                  parishes
-                </div>
+      <summary
+        class="forane-summary"
+      >
 
-              </div>
+        <div class="forane-summary-left">
 
-            </div>
+          <div class="forane-number">
 
-
-            <div>
-
-              <span class="forane-count">
-                ${originalCount}
-                ${originalCount === 1
-                  ? "Parish"
-                  : "Parishes"}
-              </span>
-
-              <span class="chevron">
-               ⌄
-              </span>
-
-            </div>
-
-          </summary>
-
-
-          <div class="parish-content">
-
-            <div class="parish-grid">
-
-              ${parishes
-                .map(parish =>
-                  parishHTML(parish)
-                )
-                .join("")}
-
-            </div>
+            ${escapeHTML(id)}
 
           </div>
 
-        </details>
 
-      `;
+          <div>
 
-    }
+            <h3 class="forane-name">
 
-
-    /* =========================================
-       PARISH CARD
-    ========================================= */
-
-    function parishHTML(parish) {
-
-      const id =
-        cleanText(
-          parish.parish_id
-        );
-
-
-      const archId =
-        cleanText(
-          parish.arch_parish_id
-        );
-
-
-      const name =
-        cleanText(
-          parish.parish_name
-        );
-
-
-      const place =
-        cleanText(
-          parish.parish_place
-        );
-
-
-      return `
-
-        <div class="parish-item">
-
-          <div class="parish-id">
-            #${escapeHTML(id)}
-          </div>
-
-
-          <div class="parish-info">
-
-            <h4 class="parish-name">
               ${escapeHTML(name)}
-            </h4>
+
+            </h3>
 
 
-            ${
-              place
-                ? `
-                  <span class="parish-place">
-                    📍 ${escapeHTML(place)}
-                  </span>
-                `
-                : ""
-            }
+            <div class="forane-meta">
 
+              ${parishes.length}
+              shown of
+              ${originalCount}
+              ${
+                originalCount === 1
+                  ? "parish"
+                  : "parishes"
+              }
 
-            ${
-              archId
-                ? `
-                  <span class="parish-arch">
-                    Arch Parish ID:
-                    ${escapeHTML(archId)}
-                  </span>
-                `
-                : ""
-            }
+            </div>
 
           </div>
 
         </div>
 
-      `;
 
-    }
+        <div>
+
+          <span class="forane-count">
+
+            ${originalCount}
+
+            ${
+              originalCount === 1
+                ? "Parish"
+                : "Parishes"
+            }
+
+          </span>
 
 
-    /* =========================================
-       EMPTY STATE
-    ========================================= */
-
-    function emptyStateHTML(
-      title,
-      message
-    ) {
-
-      return `
-
-        <div class="empty-state">
-
-          <div class="empty-icon">
-            🔎
-          </div>
-
-          <h3>
-            ${escapeHTML(title)}
-          </h3>
-
-          <p>
-            ${escapeHTML(message)}
-          </p>
+          <span class="chevron">
+            ⌄
+          </span>
 
         </div>
 
-      `;
-
-    }
+      </summary>
 
 
-    /* =========================================
-       HELPERS
-    ========================================= */
+      <div class="parish-content">
 
-    function getParishes(forane) {
+        <div class="parish-grid">
 
-      return Array.isArray(
-        forane?.parishes
-      )
-        ? forane.parishes
-        : [];
+          ${parishes
+            .map(
+              parish =>
+                parishHTML(
+                  parish
+                )
+            )
+            .join("")}
 
-    }
+        </div>
 
+      </div>
 
-    function cleanText(value) {
+    </details>
 
-      return String(
-        value ?? ""
-      ).trim();
+  `;
 
-    }
-
-
-    function escapeHTML(value) {
-
-      return String(
-        value ?? ""
-      )
-        .replace(
-          /&/g,
-          "&amp;"
-        )
-        .replace(
-          /</g,
-          "&lt;"
-        )
-        .replace(
-          />/g,
-          "&gt;"
-        )
-        .replace(
-          /"/g,
-          "&quot;"
-        )
-        .replace(
-          /'/g,
-          "&#039;"
-        );
-
-    }
+}
 
 
-    /* =========================================
-       SEARCH
-    ========================================= */
+/* =========================================================
+   PARISH CARD
+========================================================= */
 
-    searchInput.addEventListener(
-      "input",
-      event => {
+function parishHTML(
+  parish
+) {
 
-        currentSearch =
-          event.target.value;
-
-        renderForanes();
-
-      }
+  const id =
+    cleanText(
+      parish.parish_id
     );
 
 
-    /* =========================================
-       FILTER
-    ========================================= */
-
-    foraneFilter.addEventListener(
-      "change",
-      event => {
-
-        currentFilter =
-          event.target.value;
-
-        renderForanes();
-
-      }
+  const archId =
+    cleanText(
+      parish.arch_parish_id
     );
 
 
-    /* =========================================
-       CLEAR
-    ========================================= */
-
-    clearBtn.addEventListener(
-      "click",
-      () => {
-
-        currentSearch = "";
-
-        currentFilter = "";
-
-        searchInput.value = "";
-
-        foraneFilter.value = "";
-
-        renderForanes();
-
-      }
+  const name =
+    cleanText(
+      parish.parish_name
     );
 
 
-    /* =========================================
-       REFRESH
-    ========================================= */
-
-    refreshBtn.addEventListener(
-      "click",
-      () => {
-
-        loadData();
-
-      }
+  const place =
+    cleanText(
+      parish.parish_place
     );
 
 
-    /* =========================================
-       INITIAL LOAD
-    ========================================= */
+  return `
+
+    <div class="parish-item">
+
+      <div class="parish-id">
+
+        #${escapeHTML(id)}
+
+      </div>
+
+
+      <div class="parish-info">
+
+        <h4 class="parish-name">
+
+          ${escapeHTML(name)}
+
+        </h4>
+
+
+        ${
+          place
+            ? `
+
+              <span class="parish-place">
+
+                📍
+                ${escapeHTML(place)}
+
+              </span>
+
+            `
+            : ""
+        }
+
+
+        ${
+          archId
+            ? `
+
+              <span class="parish-arch">
+
+                Arch Parish ID:
+                ${escapeHTML(archId)}
+
+              </span>
+
+            `
+            : ""
+        }
+
+      </div>
+
+    </div>
+
+  `;
+
+}
+
+
+/* =========================================================
+   EMPTY
+========================================================= */
+
+function emptyStateHTML(
+  title,
+  message
+) {
+
+  return `
+
+    <div class="empty-state">
+
+      <div class="empty-icon">
+        🔎
+      </div>
+
+
+      <h3>
+        ${escapeHTML(title)}
+      </h3>
+
+
+      <p>
+        ${escapeHTML(message)}
+      </p>
+
+    </div>
+
+  `;
+
+}
+
+
+/* =========================================================
+   HELPERS
+========================================================= */
+
+function getParishes(
+  forane
+) {
+
+  return Array.isArray(
+    forane?.parishes
+  )
+    ? forane.parishes
+    : [];
+
+}
+
+
+function cleanText(
+  value
+) {
+
+  return String(
+    value ?? ""
+  ).trim();
+
+}
+
+
+function escapeHTML(
+  value
+) {
+
+  return String(
+    value ?? ""
+  )
+
+    .replace(
+      /&/g,
+      "&amp;"
+    )
+
+    .replace(
+      /</g,
+      "&lt;"
+    )
+
+    .replace(
+      />/g,
+      "&gt;"
+    )
+
+    .replace(
+      /"/g,
+      "&quot;"
+    )
+
+    .replace(
+      /'/g,
+      "&#039;"
+    );
+
+}
+
+
+/* =========================================================
+   SEARCH
+========================================================= */
+
+searchInput.addEventListener(
+  "input",
+  event => {
+
+    currentSearch =
+      event.target.value;
+
+    renderForanes();
+
+  }
+);
+
+
+/* =========================================================
+   FILTER
+========================================================= */
+
+foraneFilter.addEventListener(
+  "change",
+  event => {
+
+    currentFilter =
+      event.target.value;
+
+    renderForanes();
+
+  }
+);
+
+
+/* =========================================================
+   CLEAR
+========================================================= */
+
+clearBtn.addEventListener(
+  "click",
+  () => {
+
+    currentSearch = "";
+
+    currentFilter = "";
+
+    searchInput.value = "";
+
+    foraneFilter.value = "";
+
+    renderForanes();
+
+  }
+);
+
+
+/* =========================================================
+   REFRESH
+========================================================= */
+
+refreshBtn.addEventListener(
+  "click",
+  () => {
 
     loadData();
 
-  </script>
+  }
+);
+
+
+/* =========================================================
+   START
+========================================================= */
+
+loadData();
+
+</script>
 
 </body>
 </html>
